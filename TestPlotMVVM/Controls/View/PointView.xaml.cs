@@ -13,14 +13,14 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace Plot
+namespace Controls.View
 {
     /// <summary>
-    /// Interaction logic for Plot.xaml
+    /// Interaction logic for PointView.xaml
     /// </summary>
-    public partial class Plot : UserControl
+    public partial class PointView : UserControl
     {
-        public Plot()
+        public PointView()
         {
             InitializeComponent();
         }

@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TestPlotMVVM.ViewModel
+namespace Plot.ViewModel
 {
-    public class WorkspaceViewModel
+    public class PlotViewModel
     {
     }
 }

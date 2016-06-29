@@ -4,10 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TestPlotMVVM.ViewModel
+namespace BaseViewModels.ViewModel
 {
-    public class ViewModelBase
+    public class InputViewModel : ViewModelBase
     {
-
     }
 }

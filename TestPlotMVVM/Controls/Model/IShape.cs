@@ -4,9 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Plot
+namespace Controls.Model
 {
-    public class Class1
+    interface IShape
     {
+
     }
 }
