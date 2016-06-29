@@ -55,6 +55,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="RelayCommand.cs" />
     <Compile Include="ViewModel\AllInputViewModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="View\AllInputView.xaml.cs">
@@ -114,6 +115,14 @@
     <ProjectReference Include="..\BaseViewModels\BaseViewModels.csproj">
       <Project>{8240e022-0b2d-4d31-9269-90b901858e6d}</Project>
       <Name>BaseViewModels</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Controls\Controls.csproj">
+      <Project>{D6000A6E-99C4-490D-99F3-69E63ED17070}</Project>
+      <Name>Controls</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Plot\Plot.csproj">
+      <Project>{ba9ba9b8-99d6-4db3-aa45-87c320d78c59}</Project>
+      <Name>Plot</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

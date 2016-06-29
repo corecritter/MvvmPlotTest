@@ -3,9 +3,15 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:TestPlot.View"
+        xmlns:vm="clr-namespace:TestPlot.ViewModel"
+        xmlns:dic="clr-namespace:TestPlot"
         mc:Ignorable="d"
-        Title="MainView" Height="480" Width="640">
+        WindowStartupLocation="CenterScreen"
+        Title="{Binding Path=DisplayName}" Height="480" Width="640">
+    <Window.Resources>
+        <ResourceDictionary Source="../MainResourceDictionary.xaml"/>
+    </Window.Resources>
+    
     <DockPanel>
         <DockPanel DockPanel.Dock="Top" KeyboardNavigation.TabNavigation="None">
             <Menu KeyboardNavigation.TabNavigation="Cycle">
@@ -27,17 +33,31 @@
             <!-- Left Inner Grid -->
             <Grid Grid.Column="0">
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*"/>
                     <RowDefinition Height="4" />
-                    <RowDefinition Height="*" />
+                    <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
 
-                <HeaderedContentControl>
-                    
-                </HeaderedContentControl>
-                
+                <HeaderedContentControl
+                    Grid.Row="0"
+                    Header="Left Side"
+                    Content="{Binding Path=Workspaces}"
+                    ContentTemplate="{StaticResource WorkspacesTemplate}"
+                    />
+
+
                 <!-- Left Inner Split in 2 rows -->
                 <GridSplitter  Grid.Row="1" Height="5" HorizontalAlignment="Stretch" />
+
+                <DockPanel Grid.Row="2">
+                    <Button
+                        Command="{Binding Path=AddCommand}"
+                        Content="_Add"
+                        HorizontalAlignment="Right"
+                        MinWidth="60"
+                        />
+                </DockPanel>
+                
             </Grid>
 
             <!--- Left and right inner split in 2 cols -->

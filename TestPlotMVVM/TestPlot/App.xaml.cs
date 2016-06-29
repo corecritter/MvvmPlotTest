@@ -6,6 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using TestPlot.View;
+using TestPlot.ViewModel;
 
 namespace TestPlot
 {
@@ -19,6 +20,10 @@ namespace TestPlot
             base.OnStartup(e);
 
             MainView mainView = new MainView();
+
+            var viewModel = new MainViewModel();
+
+            mainView.DataContext = viewModel;
             mainView.Show();
         }
     }

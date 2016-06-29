@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{D6000A6E-99C4-490D-99F3-69E63ED17070}</ProjectGuid>
+    <ProjectGuid>{DD600266-8C32-4557-A01D-6E16AD3EDB36}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Controls</RootNamespace>
-    <AssemblyName>Controls</AssemblyName>
+    <RootNamespace>CoreLib</RootNamespace>
+    <AssemblyName>CoreLib</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -30,50 +30,26 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Xaml" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
-    <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DataAccess\DataRepository.cs" />
-    <Compile Include="Model\IShape.cs" />
-    <Compile Include="Model\PointSet.cs" />
     <Compile Include="Model\ShapeAddedEventArgs.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="RelayCommand.cs" />
-    <Compile Include="ViewModel\PointInputViewModel.cs" />
-    <Compile Include="View\PointInputView.xaml.cs">
-      <DependentUpon>PointInputView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\PointView.xaml.cs">
-      <DependentUpon>PointView.xaml</DependentUpon>
-    </Compile>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\BaseViewModels\BaseViewModels.csproj">
-      <Project>{8240e022-0b2d-4d31-9269-90b901858e6d}</Project>
-      <Name>BaseViewModels</Name>
+    <ProjectReference Include="..\Controls\Controls.csproj">
+      <Project>{d6000a6e-99c4-490d-99f3-69e63ed17070}</Project>
+      <Name>Controls</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup />
-  <ItemGroup>
-    <Page Include="View\PointInputView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\PointView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
