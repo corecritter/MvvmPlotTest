@@ -8,6 +8,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
 
 namespace Controls.ViewModel
 {
@@ -15,11 +16,12 @@ namespace Controls.ViewModel
     {
         readonly IShape _shape;
         readonly DataRepository _dataRepository;
-        RelayCommand _addCommand;
+        RelayCommand _saveCommand;
 
-        public PointInputViewModel(DataRepository dataRepository)
+        public PointInputViewModel(DataRepository dataRepository, IShape shape)
         {
-            _dataRepository = dataRepository;
+            this._dataRepository = dataRepository;
+            _shape = shape == null ? new PointSet() : shape;
         }
 
         #region Properties
@@ -84,6 +86,27 @@ namespace Controls.ViewModel
         {
             get { return String.Format("( {0} , {1} )", _shape.x2, _shape.y2); }
         }
+        #endregion
+
+        #region Commands
+
+        public ICommand SaveCommand
+        {
+            get
+            {
+                if (_saveCommand == null)
+                {
+                    _saveCommand = new RelayCommand(param => this.Save(), null);
+                }
+                return _saveCommand;
+            }
+        }
+
+        public void Save()
+        {
+            _dataRepository.AddShape(this._shape);
+        }
+
         #endregion
 
         #region IDataErrorInfo

@@ -65,7 +65,9 @@
 
             <!-- Right Innner Grid -->
             <Grid Grid.Column="2">
-                
+                <!--<HeaderedContentControl
+                    Header="Right Side"
+                    Content="{Binding Path=}"></HeaderedContentControl>-->
             </Grid>
         </Grid>
         

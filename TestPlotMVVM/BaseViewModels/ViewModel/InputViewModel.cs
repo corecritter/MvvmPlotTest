@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BaseViewModels.ViewModel
 {
-    public class InputViewModel : ViewModelBase
+    public class InputViewModel : WorkspaceViewModel
     {
     }
 }

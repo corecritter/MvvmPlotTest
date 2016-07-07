@@ -2,14 +2,18 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:vm="clr-namespace:TestPlot.ViewModel"
                     xmlns:vw="clr-namespace:TestPlot.View"
-                    xmlns:plotvm="clr-namespace:TestPlotMVVM.Controls;assembly=TestPlotMVVM.Controls"
-                    xmlns:plotvw="clr-namespace:TestPlot.View">
+                    xmlns:controlvm="clr-namespace:Controls.ViewModel;assembly=Controls"
+                    xmlns:controlvw="clr-namespace:Controls.View;assembly=Controls">
     
     <DataTemplate DataType="{x:Type vm:AllInputViewModel}">
         <vw:AllInputView/>
     </DataTemplate>
 
-    <!--<DataTemplate DataType="{x:Type }"-->
+
+
+    <DataTemplate DataType="{x:Type controlvm:PointInputViewModel}">
+        <controlvw:PointInputView/>
+    </DataTemplate>
 
 
     <DataTemplate x:Key="ClosableTabItemTemplate">
@@ -35,6 +39,12 @@
         </DockPanel>
     </DataTemplate>
 
+    <DataTemplate x:Key="PlotTemplate">
+        <ContentPresenter
+            Content="{Binding Path=DisplayName}"
+            />
+    </DataTemplate>
+
     <DataTemplate x:Key="WorkspacesTemplate">
         <TabControl
             IsSynchronizedWithCurrentItem="True"
@@ -42,5 +52,11 @@
             ItemTemplate="{StaticResource ClosableTabItemTemplate}"
             />
     </DataTemplate>
-    
+
+    <DataTemplate x:Key="PlotWorkspaceTemplate">
+        <TabControl
+            ItemsSource="{Binding}"
+            ItemTemplate="{StaticResource PlotTemplate}"
+            />
+    </DataTemplate>
 </ResourceDictionary>

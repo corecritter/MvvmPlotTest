@@ -1,4 +1,6 @@
 ﻿using BaseViewModels.ViewModel;
+using Controls.DataAccess;
+using Controls.Model;
 using Controls.ViewModel;
 using System;
 using System.Collections.Generic;
@@ -16,11 +18,15 @@ namespace TestPlot.ViewModel
         public ObservableCollection<PointInputViewModel> AllInputs { get; set; }
         public ObservableCollection<CommandViewModel> _commands { get; set; }
 
-        public AllInputViewModel()
+        readonly DataRepository _dataRepository;
+
+        public AllInputViewModel(DataRepository dataRepository)
         {
             this.AllInputs = new ObservableCollection<PointInputViewModel>();
             this.AllInputs.CollectionChanged += this.OnCollectionChanged;
 
+            this._dataRepository = dataRepository;
+            this._dataRepository.ShapeAdded += this.OnShapeAddedToRepository;
             base.DisplayName = "All Inputs";
         }
 
@@ -38,6 +44,12 @@ namespace TestPlot.ViewModel
         void OnInputViewModelPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
 
+        }
+
+        void OnShapeAddedToRepository(object sender, ShapeAddedEventArgs e)
+        {
+            var viewModel = new PointInputViewModel(_dataRepository, e.NewShape);
+            this.AllInputs.Add(viewModel);
         }
     }
 }

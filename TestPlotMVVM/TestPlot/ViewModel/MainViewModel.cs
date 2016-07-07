@@ -17,6 +17,7 @@ namespace TestPlot.ViewModel
     public class MainViewModel : WorkspaceViewModel
     {
         ObservableCollection<WorkspaceViewModel> _workspaces;
+        //ObservableCollection
         RelayCommand _addCommand;
         DataRepository _dataRepository;
 
@@ -34,7 +35,7 @@ namespace TestPlot.ViewModel
                 {
                     _workspaces = new ObservableCollection<WorkspaceViewModel>();
                     _workspaces.CollectionChanged += this.OnWorkSpacesChanged;
-                    AllInputViewModel workspace = new AllInputViewModel();
+                    AllInputViewModel workspace = new AllInputViewModel(_dataRepository);
                     this.Workspaces.Add(workspace);
                     //this.SetActiveWorkspace(workspace);
                 }
@@ -71,7 +72,8 @@ namespace TestPlot.ViewModel
 
         public void Add()
         {
-            PointInputViewModel workspace = new PointInputViewModel(this._dataRepository);
+            PointInputViewModel workspace = new PointInputViewModel(this._dataRepository, null);
+            this.Workspaces.Add(workspace);
         }
         #endregion
 

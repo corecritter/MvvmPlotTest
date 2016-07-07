@@ -28,28 +28,34 @@
                />
         <TextBox x:Name="x1"
                  Grid.Row="1" Grid.Column="0"
-                 Text="{Binding Path=x1, UpdateSourceTrigger=LostFocus}"
+                 Text="{Binding Path=X1, UpdateSourceTrigger=LostFocus}"
                  />
         <Label Grid.Row="0" Grid.Column="1"
                Content="y1"
                />
         <TextBox x:Name="y1"
                  Grid.Row="1" Grid.Column="1"
-                 Text="{Binding Path=y1, UpdateSourceTrigger=LostFocus}"
+                 Text="{Binding Path=Y1, UpdateSourceTrigger=LostFocus}"
                  />
         <Label Grid.Row="0" Grid.Column="2"
                Content="x2"
                />
         <TextBox x:Name="x2"
                  Grid.Row="1" Grid.Column="2"
-                 Text="{Binding Path=x2, UpdateSourceTrigger=LostFocus}"
+                 Text="{Binding Path=X2, UpdateSourceTrigger=LostFocus}"
                  />
         <Label Grid.Row="0" Grid.Column="3"
                Content="y2"
                />
         <TextBox x:Name="y2"
                  Grid.Row="1" Grid.Column="3"
-                 Text="{Binding Path=y2, UpdateSourceTrigger=LostFocus}"
+                 Text="{Binding Path=Y2, UpdateSourceTrigger=LostFocus}"
                  />
+        <Button
+            Grid.Row="1" Grid.Column="4"
+            Command="{Binding Path=SaveCommand}"
+            Content="_Save"
+            MinWidth="60"
+            />
     </Grid>
 </UserControl>
