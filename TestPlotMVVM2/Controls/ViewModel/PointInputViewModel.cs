@@ -16,6 +16,7 @@ namespace Controls.ViewModel
     {
         readonly IShape _shape;
         readonly DataRepository _dataRepository;
+        public event EventHandler<ShapeEditEventArgs> ShapeEdit;
         RelayCommand _saveCommand;
         RelayCommand _editCommand;
 
@@ -105,6 +106,16 @@ namespace Controls.ViewModel
         public void Save()
         {
             _dataRepository.AddShape(this._shape);
+        }
+
+        public ICommand TestCommand
+        {
+            get
+            {
+                if (this.ShapeEdit != null)
+                    this.ShapeEdit(this, new ShapeEditEventArgs());
+                return null;
+            }
         }
 
         #endregion

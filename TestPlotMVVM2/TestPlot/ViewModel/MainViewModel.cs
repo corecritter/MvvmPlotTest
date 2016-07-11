@@ -1,92 +1,34 @@
-﻿using BaseViewModels.ViewModel;
-using Controls.DataAccess;
-using Controls.ViewModel;
-using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Collections.Specialized;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Data;
-using System.Windows.Input;
+using GalaSoft.MvvmLight;
 
 namespace TestPlot.ViewModel
 {
-    public class MainViewModel : WorkspaceViewModel
+    /// <summary>
+    /// This class contains properties that the main View can data bind to.
+    /// <para>
+    /// Use the <strong>mvvminpc</strong> snippet to add bindable properties to this ViewModel.
+    /// </para>
+    /// <para>
+    /// You can also use Blend to data bind with the tool's support.
+    /// </para>
+    /// <para>
+    /// See http://www.galasoft.ch/mvvm
+    /// </para>
+    /// </summary>
+    public class MainViewModel : ViewModelBase
     {
-        ObservableCollection<WorkspaceViewModel> _workspaces;
-        //ObservableCollection
-        RelayCommand _addCommand;
-        DataRepository _dataRepository;
-
+        /// <summary>
+        /// Initializes a new instance of the MainViewModel class.
+        /// </summary>
         public MainViewModel()
         {
-            base.DisplayName = "From Main View Model";
-            this._dataRepository = new DataRepository();
+            ////if (IsInDesignMode)
+            ////{
+            ////    // Code runs in Blend --> create design time data.
+            ////}
+            ////else
+            ////{
+            ////    // Code runs "for real"
+            ////}
         }
-
-        public ObservableCollection<WorkspaceViewModel> Workspaces
-        {
-            get
-            {
-                if (_workspaces == null)
-                {
-                    _workspaces = new ObservableCollection<WorkspaceViewModel>();
-                    _workspaces.CollectionChanged += this.OnWorkSpacesChanged;
-                    AllInputViewModel workspace = new AllInputViewModel(_dataRepository);
-                    this.Workspaces.Add(workspace);
-                    //this.SetActiveWorkspace(workspace);
-                }
-
-                return _workspaces;
-            }
-        }
-
-        void OnWorkSpacesChanged(object sender, NotifyCollectionChangedEventArgs e)
-        {
-
-        }
-
-        void SetActiveWorkspace(WorkspaceViewModel workspace)
-        {
-            ICollectionView collectionView = CollectionViewSource.GetDefaultView(this.Workspaces);
-
-            if (collectionView != null)
-                collectionView.MoveCurrentTo(workspace);
-        }
-        #region Commands
-
-        public ICommand AddCommand
-        {
-            get
-            {
-                if(_addCommand == null)
-                {
-                    _addCommand = new RelayCommand(param => this.Add(), null);
-                }
-                return _addCommand;
-            }
-        }
-
-        //public ICommand DoubleClickCommand
-        //{
-        //    get
-        //    {
-        //        if(_doubleClickCommand  == null)
-        //        {
-
-        //        }
-        //        return null;
-        //    }
-        //}
-        public void Add()
-        {
-            PointInputViewModel workspace = new PointInputViewModel(this._dataRepository, null);
-            this.Workspaces.Add(workspace);
-        }
-        #endregion
-
     }
 }

@@ -21,7 +21,7 @@ namespace TestPlot
 
             MainView mainView = new MainView();
 
-            var viewModel = new MainViewModel();
+            var viewModel = new MainWindowViewModel();
 
             mainView.DataContext = viewModel;
             mainView.Show();
