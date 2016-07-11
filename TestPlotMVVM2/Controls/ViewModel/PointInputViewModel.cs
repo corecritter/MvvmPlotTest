@@ -108,13 +108,18 @@ namespace Controls.ViewModel
             _dataRepository.AddShape(this._shape);
         }
 
-        public ICommand TestCommand
+        public bool IsSelected
         {
             get
             {
                 if (this.ShapeEdit != null)
                     this.ShapeEdit(this, new ShapeEditEventArgs());
-                return null;
+                return true;
+            }
+            set
+            {
+                if (this.ShapeEdit != null)
+                    this.ShapeEdit(this, new ShapeEditEventArgs());
             }
         }
 

@@ -9,6 +9,15 @@
         <Style x:Key="InputItemStyle" TargetType="{x:Type ListViewItem}">
             <Setter Property="HorizontalAlignment" Value="Stretch" />
             <Setter Property="IsSelected" Value="{Binding Path=IsSelected, Mode=TwoWay}" />
+            <Style.Triggers>
+                <MultiTrigger>
+                    <MultiTrigger.Conditions>
+                        <Condition Property="IsSelected" Value="False" />
+                        <Condition Property="IsMouseOver" Value="False" />
+                    </MultiTrigger.Conditions>
+                    <Setter Property="Background" Value="#EEEEEEEE" />
+                </MultiTrigger>
+            </Style.Triggers>
         </Style>
     
     </UserControl.Resources>
@@ -18,10 +27,8 @@
         <ListView
             DataContext="{StaticResource InputGroups}"
             ItemsSource="{Binding}"
+            ItemContainerStyle="{StaticResource InputItemStyle}"
             >
-            <!--<ListView.GroupStyle>
-                <StaticResourceExtension ResourceKey="InputItemStyle"/>
-            </ListView.GroupStyle>-->
             <ListView.View>
                 <GridView>
                     <GridViewColumn Header="Point1" DisplayMemberBinding="{Binding Path=CoordPair1}"/>

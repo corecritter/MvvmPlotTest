@@ -52,13 +52,5 @@ namespace TestPlot.ViewModel
             var viewModel = new PointInputViewModel(_dataRepository, e.NewShape);
             this.AllInputs.Add(viewModel);
         }
-
-        public ICommand DoubleClickCommand
-        {
-            get
-            {
-                return null;
-            }
-        }
     }
 }
