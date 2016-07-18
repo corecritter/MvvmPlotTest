@@ -1,0 +1,61 @@
+﻿<UserControl x:Class="Controls.View.PointInputView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Controls.View"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Label Grid.Row="0" Grid.Column="0"
+               Content="x1"
+               />
+        <TextBox x:Name="x1"
+                 Grid.Row="1" Grid.Column="0"
+                 Text="{Binding Path=X1, UpdateSourceTrigger=LostFocus}"
+                 />
+        <Label Grid.Row="0" Grid.Column="1"
+               Content="y1"
+               />
+        <TextBox x:Name="y1"
+                 Grid.Row="1" Grid.Column="1"
+                 Text="{Binding Path=Y1, UpdateSourceTrigger=LostFocus}"
+                 />
+        <Label Grid.Row="0" Grid.Column="2"
+               Content="x2"
+               />
+        <TextBox x:Name="x2"
+                 Grid.Row="1" Grid.Column="2"
+                 Text="{Binding Path=X2, UpdateSourceTrigger=LostFocus}"
+                 />
+        <Label Grid.Row="0" Grid.Column="3"
+               Content="y2"
+               />
+        <TextBox x:Name="y2"
+                 Grid.Row="1" Grid.Column="3"
+                 Text="{Binding Path=Y2, UpdateSourceTrigger=LostFocus}"
+                 />
+        <Button
+            Grid.Row="1" Grid.Column="4"
+            Command="{Binding Path=SaveCommand}"
+            Content="_Save"
+            MinWidth="60"
+            />
+    </Grid>
+</UserControl>
