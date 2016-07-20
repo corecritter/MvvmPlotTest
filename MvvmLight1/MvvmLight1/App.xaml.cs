@@ -16,7 +16,8 @@ namespace MvvmLight1
 
         void StartApp(object sender, StartupEventArgs e)
         {
-            var mainWindow = new MainWindow();
+            var mainWindow = new MainView();
+            //var mainWindow = new MainWindow();
             mainWindow.Show();
         }
     }

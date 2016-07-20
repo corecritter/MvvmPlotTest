@@ -3,6 +3,8 @@ using CoreLibrary.DataAccess;
 using CoreLibrary.Model;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Ioc;
+using GalaSoft.MvvmLight.Messaging;
+using Message.Message;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -26,6 +28,7 @@ namespace MvvmLight1.ViewModel
         {
             this._dataRepository = dataRepository;
             _shape = shape == null ? new PointSetShape() : shape;
+
         }
         #region Properties
         public double X1
@@ -116,7 +119,10 @@ namespace MvvmLight1.ViewModel
             {
                 //if (this.ShapeEdit != null)
                 //    this.ShapeEdit(this, new ShapeEditEventArgs());
-                _dataRepository.EditShape(this._shape);
+                //_dataRepository.EditShape(this._shape);
+
+                Messenger.Default.Send<EditMessage>(new EditMessage { ViewModel = this });
+                //Messenger.Default.Send<EditShapeMessage>(new EditShapeMessage { Shape = this._shape });
                 return true;
             }
             set
@@ -133,7 +139,8 @@ namespace MvvmLight1.ViewModel
         {
             get
             {
-                throw new NotImplementedException();
+                return String.Empty;
+                //throw new NotImplementedException();
             }
         }
 
@@ -141,7 +148,8 @@ namespace MvvmLight1.ViewModel
         {
             get
             {
-                throw new NotImplementedException();
+                return String.Empty;
+                //throw new NotImplementedException();
             }
         }
         #endregion

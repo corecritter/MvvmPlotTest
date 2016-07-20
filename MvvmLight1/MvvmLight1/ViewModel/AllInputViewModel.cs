@@ -25,18 +25,19 @@ namespace MvvmLight1.ViewModel
         public AllInputViewModel(DataRepository dataRepository)
         {
             this.AllInputs = new ObservableCollection<PointInputViewModel>();
-            PointSetShape testPoint = new PointSetShape();
-            testPoint.x1 = 1;
-            testPoint.x2 = 2;
-            testPoint.y1 = 3;
-            testPoint.y2 = 4;
-            PointInputViewModel test1 = new ViewModel.PointInputViewModel(dataRepository, testPoint);
-            test1.PropertyChanged += this.OnInputViewModelPropertyChanged;
-            this.AllInputs.Add(test1);
             this.AllInputs.CollectionChanged += this.OnCollectionChanged;
 
             this._dataRepository = dataRepository;
             this._dataRepository.ShapeAdded += this.OnShapeAddedToRepository;
+            for (int i = 0; i < 5; i++)
+            {
+                PointSetShape testPoint = new PointSetShape();
+                testPoint.x1 = 1;
+                testPoint.x2 = 2;
+                testPoint.y1 = 3;
+                testPoint.y2 = 4;
+                this._dataRepository.AddShape(testPoint);
+            }
             //base.DisplayName = "All Inputs";
         }
 

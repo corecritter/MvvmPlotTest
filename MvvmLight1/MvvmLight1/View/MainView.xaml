@@ -1,0 +1,49 @@
+﻿<Window x:Class="MvvmLight1.View.MainView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:MvvmLight1.View"
+        xmlns:controls ="clr-namespace:Controls.View;assembly=Controls"
+        mc:Ignorable="d"
+        Height="300" Width="300"
+        Title="MVVM Light Application"
+        DataContext="{Binding Main, Source={StaticResource Locator}}">
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="../Skins/MainSkin.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+
+            <DataTemplate x:Key="WorkspaceViewModelTemplate">
+                <ListView Height="134" ></ListView>
+            </DataTemplate>
+            
+        </ResourceDictionary>
+    </Window.Resources>
+    <DockPanel>
+
+        <DockPanel DockPanel.Dock="Top" KeyboardNavigation.TabNavigation="None">
+            <Menu KeyboardNavigation.TabNavigation="Cycle">
+                <MenuItem Header="_File">
+                    <MenuItem Header="E_xit" Command="{Binding Path=CloseCommand}"/>
+                </MenuItem>
+                <MenuItem Header="_Edit"/>
+                <MenuItem Header="_Options"/>
+                <MenuItem Header="_Help"/>
+            </Menu>
+        </DockPanel>
+
+        <ListBox ItemsSource="{Binding Workspaces}">
+            
+        </ListBox>
+        <!--<HeaderedContentControl 
+            Header="HeaderedContentControl"
+            Margin="38,76,39,50" 
+            ContentTemplate="{StaticResource WorkspaceViewModelTemplate}" 
+            Content="{Binding Path=Workspaces}"
+            >
+        </HeaderedContentControl>-->
+
+    </DockPanel>
+</Window>

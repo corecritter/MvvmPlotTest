@@ -4,6 +4,8 @@ using CoreLibrary.DataAccess;
 using CoreLibrary.Model;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
+using GalaSoft.MvvmLight.Messaging;
+using Message.Message;
 using MvvmLight1.Model;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
@@ -68,8 +70,15 @@ namespace MvvmLight1.ViewModel
                     WelcomeTitle = item.Title;
                 });
             this._dataRepository = data;
-            this._dataRepository.ShapeEdit += this.Edit;
             //this._dataRepository = new DataRepository();
+            Messenger.Default.Register<EditMessage>(
+                this,
+                msg =>
+                {
+                    var viewModel = (PointInputViewModel)msg.ViewModel;
+                    if (!this._workspaces.Contains(viewModel))
+                        this.Workspaces.Add(viewModel);
+                });
         }
 
         public ObservableCollection<WorkspaceViewModel> Workspaces
@@ -82,6 +91,12 @@ namespace MvvmLight1.ViewModel
                     _workspaces.CollectionChanged += this.OnWorkSpacesChanged;
                     AllInputViewModel workspace = new AllInputViewModel(_dataRepository);
                     this.Workspaces.Add(workspace);
+
+
+                    //PointInputViewModel w = new PointInputViewModel(this._dataRepository, null);
+                    //this.Workspaces.Add(w);
+
+
                     //this.SetActiveWorkspace(workspace);
                 }
 
@@ -132,11 +147,6 @@ namespace MvvmLight1.ViewModel
             PointInputViewModel workspace = new PointInputViewModel(this._dataRepository, null);
             //workspace.ShapeEdit += this.Edit;
             this.Workspaces.Add(workspace);
-        }
-
-        public void Edit(object sender, ShapeEditEventArgs e)
-        {
-
         }
         #endregion
         ////public override void Cleanup()
