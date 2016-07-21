@@ -37,9 +37,10 @@ namespace CoreLibrary.DataAccess
             if (!ContainsShape(shape))
             {
                 this._shapes.Add(shape);
+
+                if (this.ShapeAdded != null)
+                    this.ShapeAdded(this, new ShapeAddedEventArgs(shape));
             }
-            if (this.ShapeAdded != null)
-                this.ShapeAdded(this, new ShapeAddedEventArgs(shape));
         }
 
         public void EditShape(IShape shape)

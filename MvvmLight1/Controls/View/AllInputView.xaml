@@ -1,7 +1,7 @@
 ﻿<UserControl x:Class="Controls.View.AllInputView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             DataContext="{Binding AllInput, Source={StaticResource Locator}}">
+             DataContext="{Binding AllInput, Source={StaticResource Locator}}" Width="Auto">
     <UserControl.Resources>
         <CollectionViewSource x:Key="InputGroups" Source="{Binding Path=AllInputs}">
             
@@ -10,7 +10,7 @@
         <Style x:Key="InputItemStyle" TargetType="{x:Type ListViewItem}">
             <Setter Property="HorizontalAlignment" Value="Stretch" />
             <Setter Property="IsSelected" Value="{Binding Path=IsSelected, Mode=TwoWay}" />
-            <Style.Triggers>
+            <!--<Style.Triggers>
                 <MultiTrigger>
                     <MultiTrigger.Conditions>
                         <Condition Property="IsSelected" Value="False" />
@@ -18,7 +18,7 @@
                     </MultiTrigger.Conditions>
                     <Setter Property="Background" Value="#EEEEEEEE" />
                 </MultiTrigger>
-            </Style.Triggers>
+            </Style.Triggers>-->
         </Style>
     
     </UserControl.Resources>

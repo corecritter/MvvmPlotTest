@@ -27,6 +27,7 @@ namespace MvvmLight1.ViewModel
         private readonly IDataService _dataService;
         private DataRepository _dataRepository;
         ObservableCollection<WorkspaceViewModel> _workspaces;
+        private WorkspaceViewModel _oldWorkspace;
 
         RelayCommand _addCommand;
         /// <summary>
@@ -77,7 +78,11 @@ namespace MvvmLight1.ViewModel
                 {
                     var viewModel = (PointInputViewModel)msg.ViewModel;
                     if (!this._workspaces.Contains(viewModel))
+                    {
+                        this.Workspaces.Remove(_oldWorkspace);
                         this.Workspaces.Add(viewModel);
+                        this._oldWorkspace = viewModel;
+                    }
                 });
         }
 
@@ -91,15 +96,8 @@ namespace MvvmLight1.ViewModel
                     _workspaces.CollectionChanged += this.OnWorkSpacesChanged;
                     AllInputViewModel workspace = new AllInputViewModel(_dataRepository);
                     this.Workspaces.Add(workspace);
-
-
-                    //PointInputViewModel w = new PointInputViewModel(this._dataRepository, null);
-                    //this.Workspaces.Add(w);
-
-
                     //this.SetActiveWorkspace(workspace);
                 }
-
                 return _workspaces;
             }
         }

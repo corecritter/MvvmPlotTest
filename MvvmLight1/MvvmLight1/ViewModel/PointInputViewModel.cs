@@ -20,9 +20,9 @@ namespace MvvmLight1.ViewModel
     {
         readonly IShape _shape;
         readonly DataRepository _dataRepository;
-        public event EventHandler<ShapeEditEventArgs> ShapeEdit;
         RelayCommand _saveCommand;
         public RelayCommand _editCommand;
+        private bool _isSelected;
 
         public PointInputViewModel(DataRepository dataRepository, IShape shape)
         {
@@ -41,6 +41,7 @@ namespace MvvmLight1.ViewModel
                 _shape.x1 = value;
 
                 base.RaisePropertyChanged("X1");
+                base.RaisePropertyChanged("CoordPair1");
             }
         }
 
@@ -54,6 +55,7 @@ namespace MvvmLight1.ViewModel
                 _shape.y1 = value;
 
                 base.RaisePropertyChanged("Y1");
+                base.RaisePropertyChanged("CoordPair1");
             }
         }
 
@@ -67,6 +69,7 @@ namespace MvvmLight1.ViewModel
                 _shape.x2 = value;
 
                 base.RaisePropertyChanged("X2");
+                base.RaisePropertyChanged("CoordPair2");
             }
         }
 
@@ -78,8 +81,8 @@ namespace MvvmLight1.ViewModel
                 if (value == _shape.y2)
                     return;
                 _shape.y2 = value;
-
                 base.RaisePropertyChanged("Y2");
+                base.RaisePropertyChanged("CoordPair2");
             }
         }
 
@@ -117,18 +120,18 @@ namespace MvvmLight1.ViewModel
         {
             get
             {
-                //if (this.ShapeEdit != null)
-                //    this.ShapeEdit(this, new ShapeEditEventArgs());
-                //_dataRepository.EditShape(this._shape);
-
-                Messenger.Default.Send<EditMessage>(new EditMessage { ViewModel = this });
-                //Messenger.Default.Send<EditShapeMessage>(new EditShapeMessage { Shape = this._shape });
-                return true;
+                return this._isSelected;
             }
             set
             {
                 //if (this.ShapeEdit != null)
                 //    this.ShapeEdit(this, new ShapeEditEventArgs());
+                if (value != _isSelected)
+                {
+                    _isSelected = value;
+                    if(_isSelected)
+                        Messenger.Default.Send<EditMessage>(new EditMessage { ViewModel = this });
+                }
             }
         }
 

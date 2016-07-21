@@ -32,10 +32,10 @@ namespace MvvmLight1.ViewModel
             for (int i = 0; i < 5; i++)
             {
                 PointSetShape testPoint = new PointSetShape();
-                testPoint.x1 = 1;
-                testPoint.x2 = 2;
-                testPoint.y1 = 3;
-                testPoint.y2 = 4;
+                testPoint.x1 = i;
+                testPoint.x2 = i+1;
+                testPoint.y1 = i+2;
+                testPoint.y2 = i+3;
                 this._dataRepository.AddShape(testPoint);
             }
             //base.DisplayName = "All Inputs";

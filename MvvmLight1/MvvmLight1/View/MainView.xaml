@@ -15,10 +15,6 @@
                 <ResourceDictionary Source="../Skins/MainSkin.xaml" />
             </ResourceDictionary.MergedDictionaries>
 
-            <DataTemplate x:Key="WorkspaceViewModelTemplate">
-                <ListView Height="134" ></ListView>
-            </DataTemplate>
-            
         </ResourceDictionary>
     </Window.Resources>
     <DockPanel>
@@ -34,16 +30,56 @@
             </Menu>
         </DockPanel>
 
-        <ListBox ItemsSource="{Binding Workspaces}">
-            
-        </ListBox>
-        <!--<HeaderedContentControl 
-            Header="HeaderedContentControl"
-            Margin="38,76,39,50" 
-            ContentTemplate="{StaticResource WorkspaceViewModelTemplate}" 
-            Content="{Binding Path=Workspaces}"
-            >
-        </HeaderedContentControl>-->
+
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="4" />
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <!-- Left Inner Grid -->
+            <Grid Grid.Column="0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="4" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+
+                <ListBox 
+                    ItemsSource="{Binding Workspaces}" 
+                    ItemTemplate="{StaticResource ListBoxItemTemplate}"
+                    >
+                </ListBox>
+
+                <!-- Left Inner Split in 2 rows -->
+                <GridSplitter  Grid.Row="1" Height="5" HorizontalAlignment="Stretch" />
+
+                <DockPanel Grid.Row="2">
+                    <Button
+                        Command="{Binding Path=AddCommand}"
+                        Content="_Add"
+                        HorizontalAlignment="Right"
+                        MinWidth="60"
+                        />
+                </DockPanel>
+
+            </Grid>
+
+            <!--- Left and right inner split in 2 cols -->
+            <GridSplitter Grid.Column="1" Width="5" HorizontalAlignment="Stretch"  />
+
+            <!-- Right Innner Grid -->
+            <Grid Grid.Column="2">
+                <!--<HeaderedContentControl
+                    Header="Right Side"
+                    Content="{Binding Path=}"></HeaderedContentControl>-->
+            </Grid>
+        </Grid>
+
+
+
+        
 
     </DockPanel>
 </Window>
