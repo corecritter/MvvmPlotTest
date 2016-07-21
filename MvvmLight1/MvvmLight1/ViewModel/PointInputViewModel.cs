@@ -19,14 +19,14 @@ namespace MvvmLight1.ViewModel
     public class PointInputViewModel : InputViewModel, IDataErrorInfo
     {
         readonly IPointSet _shape;
-        readonly DataRepository _dataRepository;
+        //readonly DataRepository _dataRepository;
         RelayCommand _saveCommand;
         public RelayCommand _editCommand;
         private bool _isSelected;
 
-        public PointInputViewModel(DataRepository dataRepository, IPointSet shape)
+        public PointInputViewModel(DataRepository dataRepository, IPointSet shape) : base(dataRepository)
         {
-            this._dataRepository = dataRepository;
+            //this._dataRepository = dataRepository;
             _shape = shape == null ? new PointSetShape() : shape;
 
         }

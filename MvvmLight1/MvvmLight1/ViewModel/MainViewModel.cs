@@ -96,6 +96,8 @@ namespace MvvmLight1.ViewModel
                     _workspaces.CollectionChanged += this.OnWorkSpacesChanged;
                     AllInputViewModel workspace = new AllInputViewModel(_dataRepository);
                     this.Workspaces.Add(workspace);
+                    AllSlopeInterceptInputViewModel workspace2 = new AllSlopeInterceptInputViewModel(_dataRepository);
+                    this.Workspaces.Add(workspace2);
                     //this.SetActiveWorkspace(workspace);
                 }
                 return _workspaces;
@@ -128,18 +130,6 @@ namespace MvvmLight1.ViewModel
                 return _addCommand;
             }
         }
-
-        //public ICommand DoubleClickCommand
-        //{
-        //    get
-        //    {
-        //        if(_doubleClickCommand  == null)
-        //        {
-
-        //        }
-        //        return null;
-        //    }
-        //}
         public void Add()
         {
             PointInputViewModel workspace = new PointInputViewModel(this._dataRepository, null);

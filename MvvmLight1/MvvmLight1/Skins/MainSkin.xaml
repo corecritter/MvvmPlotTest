@@ -7,6 +7,10 @@
         <vw:AllInputView/>
     </DataTemplate>
 
+    <DataTemplate DataType="{x:Type vm:AllSlopeInterceptInputViewModel}">
+        <vw:AllSlopeInterceptInputView/>
+    </DataTemplate>
+
     <DataTemplate DataType="{x:Type vm:PointInputViewModel}">
         <vw:PointInputView/>
     </DataTemplate>

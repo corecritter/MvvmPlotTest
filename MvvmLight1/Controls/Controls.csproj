@@ -49,6 +49,9 @@
     <Compile Include="View\AllInputView.xaml.cs">
       <DependentUpon>AllInputView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\AllSlopeInterceptInputView.xaml.cs">
+      <DependentUpon>AllSlopeInterceptInputView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\LineInputView.xaml.cs">
       <DependentUpon>LineInputView.xaml</DependentUpon>
     </Compile>
@@ -67,6 +70,10 @@
     <Page Include="View\AllInputView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\AllSlopeInterceptInputView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\LineInputView.xaml">
       <SubType>Designer</SubType>
