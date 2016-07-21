@@ -1,6 +1,8 @@
 ﻿using BaseViewModels.ViewModel;
 using CoreLibrary.DataAccess;
 using CoreLibrary.Model;
+using GalaSoft.MvvmLight.Messaging;
+using Message.Message;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,7 +13,7 @@ namespace MvvmLight1.ViewModel
 {
     public class LineInputViewModel : InputViewModel
     {
-        readonly ILine _shape;
+        //readonly ILine _shape;
         //readonly DataRepository _dataRepository;
         private bool _isSelected;
 
@@ -25,13 +27,13 @@ namespace MvvmLight1.ViewModel
         {
             get
             {
-                return _shape.slope;
+                return ((ILine)_shape).slope;
             }
             set
             {
-                if (value == _shape.slope)
+                if (value == ((ILine)_shape).slope)
                     return;
-                _shape.slope = value;
+                ((ILine)_shape).slope = value;
 
                 base.RaisePropertyChanged("Slope");
             }
@@ -41,13 +43,13 @@ namespace MvvmLight1.ViewModel
         {
             get
             {
-                return _shape.yIntercept;
+                return ((ILine)_shape).yIntercept;
             }
             set
             {
-                if (value == _shape.yIntercept)
+                if (value == ((ILine)_shape).yIntercept)
                     return;
-                _shape.yIntercept = value;
+                ((ILine)_shape).yIntercept = value;
                 base.RaisePropertyChanged("YIntercept");
             }
         }
@@ -57,6 +59,24 @@ namespace MvvmLight1.ViewModel
             get
             {
                 return String.Format("Y = {0} x + {1}", Slope, YIntercept);
+            }
+        }
+        public bool IsSelected
+        {
+            get
+            {
+                return this._isSelected;
+            }
+            set
+            {
+                //if (this.ShapeEdit != null)
+                //    this.ShapeEdit(this, new ShapeEditEventArgs());
+                if (value != _isSelected)
+                {
+                    _isSelected = value;
+                    if (_isSelected)
+                        Messenger.Default.Send<EditMessage>(new EditMessage { ViewModel = this });
+                }
             }
         }
     }

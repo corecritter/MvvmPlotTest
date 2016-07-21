@@ -7,6 +7,8 @@ using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Messaging;
 using Message.Message;
 using MvvmLight1.Model;
+using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.ComponentModel;
@@ -30,6 +32,12 @@ namespace MvvmLight1.ViewModel
         private WorkspaceViewModel _oldWorkspace;
 
         RelayCommand _addCommand;
+
+        private Dictionary<string, Type> _addOptions;
+        private string _selectedOption;
+
+        
+
         /// <summary>
         /// The <see cref="WelcomeTitle" /> property's name.
         /// </summary>
@@ -76,7 +84,7 @@ namespace MvvmLight1.ViewModel
                 this,
                 msg =>
                 {
-                    var viewModel = (PointInputViewModel)msg.ViewModel;
+                    var viewModel = msg.ViewModel;
                     if (!this._workspaces.Contains(viewModel))
                     {
                         this.Workspaces.Remove(_oldWorkspace);
@@ -84,6 +92,36 @@ namespace MvvmLight1.ViewModel
                         this._oldWorkspace = viewModel;
                     }
                 });
+        }
+
+        public Dictionary<string, Type> AddOptions
+        {
+            get
+            {
+                if (this._addOptions == null)
+                {
+                    _addOptions = new Dictionary<string, Type>();
+                    _addOptions.Add("Point Set", typeof(PointInputViewModel));
+                    _addOptions.Add("Slope Intercept", typeof(LineInputViewModel));
+                }
+                return this._addOptions;
+            }
+        }
+
+        public string SelectedOption
+        {
+            get
+            {
+                if (String.IsNullOrEmpty(_selectedOption))
+                    _selectedOption = "Point Set";
+                return _selectedOption;
+            }
+            set
+            {
+                if (_selectedOption.Equals(value))
+                    return;
+                _selectedOption = value;
+            }
         }
 
         public ObservableCollection<WorkspaceViewModel> Workspaces
@@ -132,9 +170,12 @@ namespace MvvmLight1.ViewModel
         }
         public void Add()
         {
-            PointInputViewModel workspace = new PointInputViewModel(this._dataRepository, null);
-            //workspace.ShapeEdit += this.Edit;
-            this.Workspaces.Add(workspace);
+            if (!String.IsNullOrEmpty(_selectedOption))
+            {
+                var workspace = Activator.CreateInstance(_addOptions[_selectedOption], new object[] { this._dataRepository, null});
+                //PointInputViewModel workspace = new PointInputViewModel(this._dataRepository, null);
+                this.Workspaces.Add((InputViewModel)workspace);
+            }
         }
         #endregion
         ////public override void Cleanup()
