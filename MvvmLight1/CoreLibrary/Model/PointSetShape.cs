@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace CoreLibrary.Model
 {
-    public class PointSetShape : IShape
+    public class PointSetShape : IPointSet
     {
         public double x1 { get; set; }
         public double x2 { get; set; }

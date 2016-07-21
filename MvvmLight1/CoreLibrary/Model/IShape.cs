@@ -8,9 +8,10 @@ namespace CoreLibrary.Model
 {
     public interface IShape
     {
-        double x1 { get; set; }
-        double x2 { get; set; }
-        double y1 { get; set; }
-        double y2 { get; set; }
+        //Type InputType { get; set; }
+        //double x1 { get; set; }
+        //double x2 { get; set; }
+        //double y1 { get; set; }
+        //double y2 { get; set; }
     }
 }

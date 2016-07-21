@@ -17,38 +17,44 @@ namespace MvvmLight1.ViewModel
 {
     public class AllInputViewModel : WorkspaceViewModel
     {
-        public ObservableCollection<PointInputViewModel> AllInputs { get; set; }
+        public ObservableCollection<InputViewModel> AllInputs { get; set; }
         //public ObservableCollection<CommandViewModel> _commands { get; set; }
 
         readonly DataRepository _dataRepository;
 
         public AllInputViewModel(DataRepository dataRepository)
         {
-            this.AllInputs = new ObservableCollection<PointInputViewModel>();
+            this.AllInputs = new ObservableCollection<InputViewModel>();
             this.AllInputs.CollectionChanged += this.OnCollectionChanged;
 
             this._dataRepository = dataRepository;
             this._dataRepository.ShapeAdded += this.OnShapeAddedToRepository;
             for (int i = 0; i < 5; i++)
             {
+                PointInputViewModel temp = new PointInputViewModel(null, null);
                 PointSetShape testPoint = new PointSetShape();
                 testPoint.x1 = i;
                 testPoint.x2 = i+1;
                 testPoint.y1 = i+2;
                 testPoint.y2 = i+3;
-                this._dataRepository.AddShape(testPoint);
+                this._dataRepository.AddShape(temp.GetType(), testPoint);
             }
+            LineInputViewModel temp2 = new LineInputViewModel(null, null);
+            SlopeInterceptShape testLine = new SlopeInterceptShape();
+            testLine.slope = 1;
+            testLine.yIntercept = 5;
+            this._dataRepository.AddShape(temp2.GetType(), testLine);
             //base.DisplayName = "All Inputs";
         }
 
         void OnCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
             if (e.NewItems != null && e.NewItems.Count != 0)
-                foreach (PointInputViewModel pointVM in e.NewItems)
+                foreach (InputViewModel pointVM in e.NewItems)
                     pointVM.PropertyChanged += this.OnInputViewModelPropertyChanged;
 
             if (e.OldItems != null && e.OldItems.Count != 0)
-                foreach (PointInputViewModel pointVM in e.OldItems)
+                foreach (InputViewModel pointVM in e.OldItems)
                     pointVM.PropertyChanged -= this.OnInputViewModelPropertyChanged;
         }
 
@@ -59,8 +65,9 @@ namespace MvvmLight1.ViewModel
 
         void OnShapeAddedToRepository(object sender, ShapeAddedEventArgs e)
         {
-            var viewModel = new PointInputViewModel(_dataRepository, e.NewShape);
-            this.AllInputs.Add(viewModel);
+            var viewModel = Activator.CreateInstance(e.SenderType, new object[] { _dataRepository, e.NewShape });
+            //var viewModel = new PointInputViewModel(_dataRepository, (IPointSet)e.NewShape);
+            this.AllInputs.Add((InputViewModel)viewModel);
         }
     }
 }

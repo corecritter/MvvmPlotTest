@@ -18,13 +18,13 @@ namespace MvvmLight1.ViewModel
 {
     public class PointInputViewModel : InputViewModel, IDataErrorInfo
     {
-        readonly IShape _shape;
+        readonly IPointSet _shape;
         readonly DataRepository _dataRepository;
         RelayCommand _saveCommand;
         public RelayCommand _editCommand;
         private bool _isSelected;
 
-        public PointInputViewModel(DataRepository dataRepository, IShape shape)
+        public PointInputViewModel(DataRepository dataRepository, IPointSet shape)
         {
             this._dataRepository = dataRepository;
             _shape = shape == null ? new PointSetShape() : shape;
@@ -113,7 +113,7 @@ namespace MvvmLight1.ViewModel
 
         public void Save()
         {
-            _dataRepository.AddShape(this._shape);
+            _dataRepository.AddShape(this.GetType(), this._shape);
         }
 
         public bool IsSelected

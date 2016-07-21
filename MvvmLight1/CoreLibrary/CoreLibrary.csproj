@@ -62,10 +62,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DataAccess\DataRepository.cs" />
+    <Compile Include="Model\ILine.cs" />
+    <Compile Include="Model\IPointSet.cs" />
     <Compile Include="Model\IShape.cs" />
     <Compile Include="Model\PointSetShape.cs" />
     <Compile Include="Model\ShapeAddedEventArgs.cs" />
     <Compile Include="Model\ShapeEditEventArgs.cs" />
+    <Compile Include="Model\SlopeInterceptShape.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -9,16 +9,55 @@ using System.Threading.Tasks;
 
 namespace MvvmLight1.ViewModel
 {
-    public class LineInputViewModel : WorkspaceViewModel
+    public class LineInputViewModel : InputViewModel
     {
-        readonly IShape _shape;
+        readonly ILine _shape;
         readonly DataRepository _dataRepository;
         private bool _isSelected;
 
-        public LineInputViewModel(DataRepository dataRepository, IShape shape)
+        public LineInputViewModel(DataRepository dataRepository, ILine shape)
         {
             this._dataRepository = dataRepository;
-            _shape = shape == null ? new PointSetShape() : shape;
+            _shape = shape == null ? new SlopeInterceptShape() : shape;
+        }
+
+        public double Slope
+        {
+            get
+            {
+                return _shape.slope;
+            }
+            set
+            {
+                if (value == _shape.slope)
+                    return;
+                _shape.slope = value;
+
+                base.RaisePropertyChanged("Slope");
+            }
+        }
+
+        public double YIntercept
+        {
+            get
+            {
+                return _shape.yIntercept;
+            }
+            set
+            {
+                if (value == _shape.yIntercept)
+                    return;
+                _shape.yIntercept = value;
+                base.RaisePropertyChanged("YIntercept");
+            }
+        }
+
+        public string LineEquation
+        {
+            get
+            {
+                return String.Format("Y = {0} x + {1}", Slope, YIntercept);
+            }
         }
     }
 }
