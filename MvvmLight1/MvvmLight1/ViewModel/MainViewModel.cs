@@ -4,7 +4,11 @@ using CoreLibrary.DataAccess;
 using CoreLibrary.Model;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
+using GalaSoft.MvvmLight.Messaging;
+using Message.Message;
 using MvvmLight1.Model;
+using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.ComponentModel;
@@ -25,8 +29,15 @@ namespace MvvmLight1.ViewModel
         private readonly IDataService _dataService;
         private DataRepository _dataRepository;
         ObservableCollection<WorkspaceViewModel> _workspaces;
+        private WorkspaceViewModel _oldWorkspace;
 
         RelayCommand _addCommand;
+
+        private Dictionary<string, Type> _addOptions;
+        private string _selectedOption;
+
+        
+
         /// <summary>
         /// The <see cref="WelcomeTitle" /> property's name.
         /// </summary>
@@ -68,8 +79,49 @@ namespace MvvmLight1.ViewModel
                     WelcomeTitle = item.Title;
                 });
             this._dataRepository = data;
-            this._dataRepository.ShapeEdit += this.Edit;
             //this._dataRepository = new DataRepository();
+            Messenger.Default.Register<EditMessage>(
+                this,
+                msg =>
+                {
+                    var viewModel = msg.ViewModel;
+                    if (!this._workspaces.Contains(viewModel))
+                    {
+                        this.Workspaces.Remove(_oldWorkspace);
+                        this.Workspaces.Add(viewModel);
+                        this._oldWorkspace = viewModel;
+                    }
+                });
+        }
+
+        public Dictionary<string, Type> AddOptions
+        {
+            get
+            {
+                if (this._addOptions == null)
+                {
+                    _addOptions = new Dictionary<string, Type>();
+                    _addOptions.Add("Point Set", typeof(PointInputViewModel));
+                    _addOptions.Add("Slope Intercept", typeof(LineInputViewModel));
+                }
+                return this._addOptions;
+            }
+        }
+
+        public string SelectedOption
+        {
+            get
+            {
+                if (String.IsNullOrEmpty(_selectedOption))
+                    _selectedOption = "Point Set";
+                return _selectedOption;
+            }
+            set
+            {
+                if (_selectedOption.Equals(value))
+                    return;
+                _selectedOption = value;
+            }
         }
 
         public ObservableCollection<WorkspaceViewModel> Workspaces
@@ -82,9 +134,10 @@ namespace MvvmLight1.ViewModel
                     _workspaces.CollectionChanged += this.OnWorkSpacesChanged;
                     AllInputViewModel workspace = new AllInputViewModel(_dataRepository);
                     this.Workspaces.Add(workspace);
+                    AllSlopeInterceptInputViewModel workspace2 = new AllSlopeInterceptInputViewModel(_dataRepository);
+                    this.Workspaces.Add(workspace2);
                     //this.SetActiveWorkspace(workspace);
                 }
-
                 return _workspaces;
             }
         }
@@ -115,28 +168,14 @@ namespace MvvmLight1.ViewModel
                 return _addCommand;
             }
         }
-
-        //public ICommand DoubleClickCommand
-        //{
-        //    get
-        //    {
-        //        if(_doubleClickCommand  == null)
-        //        {
-
-        //        }
-        //        return null;
-        //    }
-        //}
         public void Add()
         {
-            PointInputViewModel workspace = new PointInputViewModel(this._dataRepository, null);
-            //workspace.ShapeEdit += this.Edit;
-            this.Workspaces.Add(workspace);
-        }
-
-        public void Edit(object sender, ShapeEditEventArgs e)
-        {
-
+            if (!String.IsNullOrEmpty(_selectedOption))
+            {
+                var workspace = Activator.CreateInstance(_addOptions[_selectedOption], new object[] { this._dataRepository, null});
+                //PointInputViewModel workspace = new PointInputViewModel(this._dataRepository, null);
+                this.Workspaces.Add((InputViewModel)workspace);
+            }
         }
         #endregion
         ////public override void Cleanup()

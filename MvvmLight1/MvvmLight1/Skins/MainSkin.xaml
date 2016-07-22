@@ -7,10 +7,18 @@
         <vw:AllInputView/>
     </DataTemplate>
 
+    <DataTemplate DataType="{x:Type vm:AllSlopeInterceptInputViewModel}">
+        <vw:AllSlopeInterceptInputView/>
+    </DataTemplate>
+
     <DataTemplate DataType="{x:Type vm:PointInputViewModel}">
         <vw:PointInputView/>
     </DataTemplate>
 
+    <DataTemplate DataType="{x:Type vm:LineInputViewModel}">
+        <vw:LineInputView/>
+    </DataTemplate>
+    
     <DataTemplate x:Key="ClosableTabItemTemplate">
         <DockPanel Width="120">
             <Button 
@@ -29,17 +37,22 @@
                 />
             <ContentPresenter 
                 Content="{Binding Path=DisplayName}" 
-                VerticalAlignment="Center" 
+                VerticalAlignment="Center"
                 />
         </DockPanel>
     </DataTemplate>
 
     <DataTemplate x:Key="WorkspacesTemplate">
+        
         <TabControl
             IsSynchronizedWithCurrentItem="True"
             ItemsSource="{Binding}"
             ItemTemplate="{StaticResource ClosableTabItemTemplate}"
-            />
+            /> 
+    </DataTemplate>
+
+    <DataTemplate x:Key="ListBoxItemTemplate">
+        <ListBoxItem  Content="{Binding}"/>
     </DataTemplate>
 
 </ResourceDictionary>

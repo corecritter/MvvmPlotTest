@@ -12,7 +12,6 @@ namespace CoreLibrary.DataAccess
         readonly List<IShape> _shapes;
 
         public event EventHandler<ShapeAddedEventArgs> ShapeAdded;
-        public event EventHandler<ShapeEditEventArgs> ShapeEdit;
 
         public DataRepository()
         {
@@ -29,7 +28,7 @@ namespace CoreLibrary.DataAccess
             return _shapes.Contains(shape);
         }
 
-        public void AddShape(IShape shape)
+        public void AddShape(Type senderType, IShape shape)
         {
             if (shape == null)
                 throw new ArgumentException("null shape");
@@ -39,17 +38,8 @@ namespace CoreLibrary.DataAccess
                 this._shapes.Add(shape);
 
                 if (this.ShapeAdded != null)
-                    this.ShapeAdded(this, new ShapeAddedEventArgs(shape));
+                    this.ShapeAdded(this, new ShapeAddedEventArgs(senderType, shape));
             }
-        }
-
-        public void EditShape(IShape shape)
-        {
-            if (shape == null)
-                throw new ArgumentException("null shape");
-
-                if (this.ShapeEdit != null)
-                    this.ShapeEdit(this, new ShapeEditEventArgs(shape));
         }
     }
 }

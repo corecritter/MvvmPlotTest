@@ -3,6 +3,8 @@ using CoreLibrary.DataAccess;
 using CoreLibrary.Model;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Ioc;
+using GalaSoft.MvvmLight.Messaging;
+using Message.Message;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -16,113 +18,102 @@ namespace MvvmLight1.ViewModel
 {
     public class PointInputViewModel : InputViewModel, IDataErrorInfo
     {
-        readonly IShape _shape;
-        readonly DataRepository _dataRepository;
-        public event EventHandler<ShapeEditEventArgs> ShapeEdit;
-        RelayCommand _saveCommand;
+        //readonly IPointSet _shape;
+        //readonly DataRepository _dataRepository;
+        //RelayCommand _saveCommand;
         public RelayCommand _editCommand;
+        private bool _isSelected;
 
-        public PointInputViewModel(DataRepository dataRepository, IShape shape)
+        public PointInputViewModel(DataRepository dataRepository, IPointSet shape) : base(dataRepository)
         {
-            this._dataRepository = dataRepository;
+            //this._dataRepository = dataRepository;
             _shape = shape == null ? new PointSetShape() : shape;
         }
         #region Properties
         public double X1
         {
-            get { return _shape.x1; }
+            get { return ((IPointSet)_shape).x1; }
             set
             {
-                if (value == _shape.x1)
+                if (value == ((IPointSet)_shape).x1)
                     return;
-                _shape.x1 = value;
+                ((IPointSet)_shape).x1 = value;
 
                 base.RaisePropertyChanged("X1");
+                base.RaisePropertyChanged("CoordPair1");
             }
         }
 
         public double Y1
         {
-            get { return _shape.y1; }
+            get { return ((IPointSet)_shape).y1; }
             set
             {
-                if (value == _shape.y1)
+                if (value == ((IPointSet)_shape).y1)
                     return;
-                _shape.y1 = value;
+                ((IPointSet)_shape).y1 = value;
 
                 base.RaisePropertyChanged("Y1");
+                base.RaisePropertyChanged("CoordPair1");
             }
         }
 
         public double X2
         {
-            get { return _shape.x2; }
+            get { return ((IPointSet)_shape).x2; }
             set
             {
-                if (value == _shape.x2)
+                if (value == ((IPointSet)_shape).x2)
                     return;
-                _shape.x2 = value;
+                ((IPointSet)_shape).x2 = value;
 
                 base.RaisePropertyChanged("X2");
+                base.RaisePropertyChanged("CoordPair2");
             }
         }
 
         public double Y2
         {
-            get { return _shape.y2; }
+            get { return ((IPointSet)_shape).y2; }
             set
             {
-                if (value == _shape.y2)
+                if (value == ((IPointSet)_shape).y2)
                     return;
-                _shape.y2 = value;
-
+                ((IPointSet)_shape).y2 = value;
                 base.RaisePropertyChanged("Y2");
+                base.RaisePropertyChanged("CoordPair2");
             }
         }
 
         public string CoordPair1
         {
-            get { return String.Format("( {0} , {1} )", _shape.x1, _shape.y1); }
+            get { return String.Format("( {0} , {1} )", ((IPointSet)_shape).x1, ((IPointSet)_shape).y1); }
         }
 
         public string CoordPair2
         {
-            get { return String.Format("( {0} , {1} )", _shape.x2, _shape.y2); }
+            get { return String.Format("( {0} , {1} )", ((IPointSet)_shape).x2, ((IPointSet)_shape).y2); }
         }
         #endregion
 
         #region Commands
 
-        public ICommand SaveCommand
-        {
-            get
-            {
-                if (_saveCommand == null)
-                {
-                    _saveCommand = new RelayCommand(this.Save, null);
-                }
-                return _saveCommand;
-            }
-        }
-
-        public void Save()
-        {
-            _dataRepository.AddShape(this._shape);
-        }
-
         public bool IsSelected
         {
             get
             {
-                //if (this.ShapeEdit != null)
-                //    this.ShapeEdit(this, new ShapeEditEventArgs());
-                _dataRepository.EditShape(this._shape);
-                return true;
+                return this._isSelected;
             }
             set
             {
                 //if (this.ShapeEdit != null)
                 //    this.ShapeEdit(this, new ShapeEditEventArgs());
+                if (value != _isSelected)
+                {
+                    _isSelected = value;
+                    if (_isSelected)
+                        Messenger.Default.Send<EditMessage>(new EditMessage { ViewModel = this });
+                }
             }
         }
 
@@ -133,7 +124,8 @@ namespace MvvmLight1.ViewModel
         {
             get
             {
-                throw new NotImplementedException();
+                return String.Empty;
+                //throw new NotImplementedException();
             }
         }
 
@@ -141,7 +133,8 @@ namespace MvvmLight1.ViewModel
         {
             get
             {
-                throw new NotImplementedException();
+                return String.Empty;
+                //throw new NotImplementedException();
             }
         }
         #endregion
