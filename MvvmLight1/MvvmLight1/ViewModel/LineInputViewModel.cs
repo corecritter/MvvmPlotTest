@@ -13,12 +13,8 @@ namespace MvvmLight1.ViewModel
 {
     public class LineInputViewModel : InputViewModel
     {
-        //readonly ILine _shape;
-        //readonly DataRepository _dataRepository;
-
         public LineInputViewModel(DataRepository dataRepository, ILine shape) : base(dataRepository)
         {
-            //this._dataRepository = dataRepository;
             _shape = shape == null ? new SlopeInterceptShape() : shape;
         }
 
