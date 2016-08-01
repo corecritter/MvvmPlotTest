@@ -1,8 +1,8 @@
-﻿using BaseViewModels.ViewModel;
-using CoreLibrary.DataAccess;
+﻿using CoreLibrary.DataAccess;
+using CoreLibrary.Message;
 using CoreLibrary.Model;
+using CoreLibrary.ViewModel;
 using GalaSoft.MvvmLight.Messaging;
-using Message.Message;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,7 +15,6 @@ namespace MvvmLight1.ViewModel
     {
         //readonly ILine _shape;
         //readonly DataRepository _dataRepository;
-        private bool _isSelected;
 
         public LineInputViewModel(DataRepository dataRepository, ILine shape) : base(dataRepository)
         {
@@ -36,6 +35,7 @@ namespace MvvmLight1.ViewModel
                 ((ILine)_shape).slope = value;
 
                 base.RaisePropertyChanged("Slope");
+                base.RaisePropertyChanged("LineEquation");
             }
         }
 
@@ -51,6 +51,7 @@ namespace MvvmLight1.ViewModel
                     return;
                 ((ILine)_shape).yIntercept = value;
                 base.RaisePropertyChanged("YIntercept");
+                base.RaisePropertyChanged("LineEquation");
             }
         }
 
@@ -59,24 +60,6 @@ namespace MvvmLight1.ViewModel
             get
             {
                 return String.Format("Y = {0} x + {1}", Slope, YIntercept);
-            }
-        }
-        public bool IsSelected
-        {
-            get
-            {
-                return this._isSelected;
-            }
-            set
-            {
-                //if (this.ShapeEdit != null)
-                //    this.ShapeEdit(this, new ShapeEditEventArgs());
-                if (value != _isSelected)
-                {
-                    _isSelected = value;
-                    if (_isSelected)
-                        Messenger.Default.Send<EditMessage>(new EditMessage { ViewModel = this });
-                }
             }
         }
     }

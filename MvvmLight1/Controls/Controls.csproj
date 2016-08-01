@@ -61,12 +61,6 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
-    <ProjectReference Include="..\BaseViewModel\BaseViewModels.csproj">
-      <Project>{45bf8421-1382-4bed-9401-a1c7c922ec18}</Project>
-      <Name>BaseViewModels</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <Page Include="View\AllInputView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

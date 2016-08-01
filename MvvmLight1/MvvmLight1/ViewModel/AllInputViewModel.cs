@@ -1,6 +1,6 @@
-﻿using BaseViewModels.ViewModel;
-using CoreLibrary.DataAccess;
+﻿using CoreLibrary.DataAccess;
 using CoreLibrary.Model;
+using CoreLibrary.ViewModel;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Ioc;
 using System;

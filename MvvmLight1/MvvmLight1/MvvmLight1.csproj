@@ -139,10 +139,6 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\BaseViewModel\BaseViewModels.csproj">
-      <Project>{45bf8421-1382-4bed-9401-a1c7c922ec18}</Project>
-      <Name>BaseViewModels</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Controls\Controls.csproj">
       <Project>{729b9b30-4eec-4857-97de-54049a752fdb}</Project>
       <Name>Controls</Name>
@@ -150,10 +146,6 @@
     <ProjectReference Include="..\CoreLibrary\CoreLibrary.csproj">
       <Project>{eda06180-a310-4d8b-9f45-d90a1d870081}</Project>
       <Name>CoreLibrary</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Message\Message.csproj">
-      <Project>{0d979db0-615c-4188-aec3-33334dc078b8}</Project>
-      <Name>Message</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

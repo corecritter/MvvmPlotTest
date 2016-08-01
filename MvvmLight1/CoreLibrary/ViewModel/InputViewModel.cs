@@ -1,4 +1,5 @@
 ﻿using CoreLibrary.DataAccess;
+using CoreLibrary.Message;
 using CoreLibrary.Model;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Messaging;
@@ -9,7 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
-namespace BaseViewModels.ViewModel
+namespace CoreLibrary.ViewModel
 {
     public class InputViewModel : WorkspaceViewModel
     {

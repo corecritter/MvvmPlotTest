@@ -47,10 +47,6 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
-    <ProjectReference Include="..\BaseViewModel\BaseViewModels.csproj">
-      <Project>{45bf8421-1382-4bed-9401-a1c7c922ec18}</Project>
-      <Name>BaseViewModels</Name>
-    </ProjectReference>
     <ProjectReference Include="..\CoreLibrary\CoreLibrary.csproj">
       <Project>{eda06180-a310-4d8b-9f45-d90a1d870081}</Project>
       <Name>CoreLibrary</Name>

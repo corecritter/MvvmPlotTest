@@ -1,11 +1,11 @@
-﻿using BaseViewModels.ViewModel;
-using Controls.View;
+﻿using Controls.View;
 using CoreLibrary.DataAccess;
+using CoreLibrary.Message;
 using CoreLibrary.Model;
+using CoreLibrary.ViewModel;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Messaging;
-using Message.Message;
 using MvvmLight1.Model;
 using System;
 using System.Collections.Generic;
@@ -29,7 +29,7 @@ namespace MvvmLight1.ViewModel
         private readonly IDataService _dataService;
         private DataRepository _dataRepository;
         ObservableCollection<WorkspaceViewModel> _workspaces;
-        private WorkspaceViewModel _oldWorkspace;
+        private WorkspaceViewModel _currentWorkspace;
 
         RelayCommand _addCommand;
 
@@ -85,12 +85,7 @@ namespace MvvmLight1.ViewModel
                 msg =>
                 {
                     var viewModel = msg.ViewModel;
-                    if (!this._workspaces.Contains(viewModel))
-                    {
-                        this.Workspaces.Remove(_oldWorkspace);
-                        this.Workspaces.Add(viewModel);
-                        this._oldWorkspace = viewModel;
-                    }
+                    ChangeCurrentWorkspace((WorkspaceViewModel)viewModel);
                 });
         }
 
@@ -173,9 +168,15 @@ namespace MvvmLight1.ViewModel
             if (!String.IsNullOrEmpty(_selectedOption))
             {
                 var workspace = Activator.CreateInstance(_addOptions[_selectedOption], new object[] { this._dataRepository, null});
-                //PointInputViewModel workspace = new PointInputViewModel(this._dataRepository, null);
-                this.Workspaces.Add((InputViewModel)workspace);
+                ChangeCurrentWorkspace((WorkspaceViewModel)workspace);
             }
+        }
+
+        public void ChangeCurrentWorkspace(WorkspaceViewModel newWorkspace)
+        {
+            this.Workspaces.Remove(_currentWorkspace);
+            this._currentWorkspace = newWorkspace;
+            this.Workspaces.Add(this._currentWorkspace);
         }
         #endregion
         ////public override void Cleanup()

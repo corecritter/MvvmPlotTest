@@ -1,10 +1,9 @@
-﻿using BaseViewModels.ViewModel;
-using CoreLibrary.DataAccess;
+﻿using CoreLibrary.DataAccess;
 using CoreLibrary.Model;
+using CoreLibrary.ViewModel;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Ioc;
 using GalaSoft.MvvmLight.Messaging;
-using Message.Message;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -22,7 +21,6 @@ namespace MvvmLight1.ViewModel
         //readonly DataRepository _dataRepository;
         //RelayCommand _saveCommand;
         public RelayCommand _editCommand;
-        private bool _isSelected;
 
         public PointInputViewModel(DataRepository dataRepository, IPointSet shape) : base(dataRepository)
         {
@@ -97,25 +95,6 @@ namespace MvvmLight1.ViewModel
         #endregion
 
         #region Commands
-
-        public bool IsSelected
-        {
-            get
-            {
-                return this._isSelected;
-            }
-            set
-            {
-                //if (this.ShapeEdit != null)
-                //    this.ShapeEdit(this, new ShapeEditEventArgs());
-                if (value != _isSelected)
-                {
-                    _isSelected = value;
-                    if (_isSelected)
-                        Messenger.Default.Send<EditMessage>(new EditMessage { ViewModel = this });
-                }
-            }
-        }
 
         #endregion
 
