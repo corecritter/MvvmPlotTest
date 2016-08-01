@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Media.Media3D;
 
 namespace CoreLibrary.Model
 {
@@ -16,6 +17,11 @@ namespace CoreLibrary.Model
         public double yIntercept
         {
             get; set;
+        }
+
+        public GeometryModel3D GetShape()
+        {
+            return null;
         }
     }
 }

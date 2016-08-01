@@ -36,7 +36,7 @@ namespace MvvmLight1.ViewModel
         private Dictionary<string, Type> _addOptions;
         private string _selectedOption;
 
-        
+        private PlotViewModel _plot;
 
         /// <summary>
         /// The <see cref="WelcomeTitle" /> property's name.

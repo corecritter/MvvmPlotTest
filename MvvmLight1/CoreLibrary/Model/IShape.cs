@@ -3,15 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Media.Media3D;
 
 namespace CoreLibrary.Model
 {
     public interface IShape
     {
-        //Type InputType { get; set; }
-        //double x1 { get; set; }
-        //double x2 { get; set; }
-        //double y1 { get; set; }
-        //double y2 { get; set; }
+        GeometryModel3D GetShape();
     }
 }

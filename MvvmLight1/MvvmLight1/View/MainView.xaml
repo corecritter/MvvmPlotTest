@@ -77,8 +77,10 @@
             <!-- Right Innner Grid -->
             <Grid Grid.Column="2">
                 <!--<HeaderedContentControl
-                    Header="Right Side"
-                    Content="{Binding Path=}"></HeaderedContentControl>-->
+                    Content="{StaticResource PlotTemplate}"
+                    >
+                </HeaderedContentControl>-->
+                <UserControl Content="{StaticResource PlotTemplate}"/>
             </Grid>
         </Grid>
 

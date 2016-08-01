@@ -40,13 +40,11 @@ namespace MvvmLight1.ViewModel
                 SimpleIoc.Default.Register<IDataService, DataService>();
             }
             SimpleIoc.Default.Register<DataRepository>();
-            //SimpleIoc.Default.Register<IShape>();
-
-
 
             SimpleIoc.Default.Register<MainViewModel>();
             SimpleIoc.Default.Register<PointInputViewModel>();
             SimpleIoc.Default.Register<AllInputViewModel>();
+            SimpleIoc.Default.Register<PlotViewModel>();
         }
 
         /// <summary>
@@ -76,6 +74,14 @@ namespace MvvmLight1.ViewModel
             get
             {
                 return ServiceLocator.Current.GetInstance<PointInputViewModel>();
+            }
+        }
+
+        public PlotViewModel Plot
+        {
+            get
+            {
+                return ServiceLocator.Current.GetInstance<PlotViewModel>();
             }
         }
 

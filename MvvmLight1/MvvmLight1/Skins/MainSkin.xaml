@@ -1,7 +1,8 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:vm="clr-namespace:MvvmLight1.ViewModel"
-                    xmlns:vw ="clr-namespace:Controls.View;assembly=Controls">
+                    xmlns:vw ="clr-namespace:Controls.View;assembly=Controls"
+                    xmlns:plotvw="clr-namespace:Plot.View;assembly=Plot">
 
     <DataTemplate DataType="{x:Type vm:AllInputViewModel}">
         <vw:AllInputView/>
@@ -54,5 +55,10 @@
     <DataTemplate x:Key="ListBoxItemTemplate">
         <ListBoxItem  Content="{Binding}"/>
     </DataTemplate>
+    
+    <UserControl x:Key="PlotTemplate">
+        <plotvw:PlotView />
+    </UserControl>
+
 
 </ResourceDictionary>

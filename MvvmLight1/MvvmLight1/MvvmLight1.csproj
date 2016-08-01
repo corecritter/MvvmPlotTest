@@ -84,6 +84,7 @@
     <Compile Include="ViewModel\AllSlopeInterceptInputViewModel.cs" />
     <Compile Include="ViewModel\LineInputViewModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
+    <Compile Include="ViewModel\PlotViewModel.cs" />
     <Compile Include="ViewModel\PointInputViewModel.cs" />
     <Compile Include="ViewModel\ViewModelLocator.cs" />
     <Page Include="View\MainView.xaml">
@@ -146,6 +147,10 @@
     <ProjectReference Include="..\CoreLibrary\CoreLibrary.csproj">
       <Project>{eda06180-a310-4d8b-9f45-d90a1d870081}</Project>
       <Name>CoreLibrary</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Plot\Plot.csproj">
+      <Project>{41338b26-fe9b-4531-8f8a-2b1d25421063}</Project>
+      <Name>Plot</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
