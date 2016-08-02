@@ -1,11 +1,14 @@
 ﻿using CoreLibrary.DataAccess;
 using GalaSoft.MvvmLight;
+using GalaSoft.MvvmLight.Command;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Media3D;
 
@@ -17,16 +20,17 @@ namespace MvvmLight1.ViewModel
         private Point3D position;
         private Vector3D at;
         private Vector3D up;
-        private Viewport3D viewport;
         private DataRepository _dataRepository;
+        private double mouseX;
+        private double mouseY;
+
+        private double sceneWidth;
+        private double sceneHeight;
 
         public PlotViewModel(DataRepository dataRepository)
         {
             position = new Point3D(-40, 40, 40);
             at = new Vector3D(40, -40, -40);
-
-
-
             //position = new Point3D(0, 0, 1);
             //at = new Vector3D(0, 0, -1);
             up = new Vector3D(0, 1, 0);
@@ -35,44 +39,20 @@ namespace MvvmLight1.ViewModel
             this._dataRepository = dataRepository;
         }
 
-        public Viewport3D ViewPort
-        {
-            get
-            {
-                if (viewport == null)
-                {
-                    viewport = new Viewport3D();
-                }
-                viewport.Children.Clear();
-                viewport.Camera = camera;
-                //viewport.Children.Add(Objects);
-                return viewport;
-            }
-        }
-
         public Model3DGroup Objects
         {
             get
             {
-                ModelVisual3D objects = new ModelVisual3D();
-                Model3DGroup group = new Model3DGroup();
+                Model3DGroup modelGroup = new Model3DGroup();
                 foreach (var shape in this._dataRepository.GetShapes())
                 {
                     var o = shape.GetShape();
                     if (o != null)
-                       group.Children.Add(shape.GetShape());
+                        modelGroup.Children.Add(shape.GetShape());
                 }
-                //objects.Content = group;
                 DirectionalLight light = new DirectionalLight(Colors.White, new Vector3D(-1, -1, -3));
-                group.Children.Add(light);
-
-
-
-                
-                //group.Children.Add(m);
-                //objects.Content = group;
-                //return objects;
-                return group;
+                modelGroup.Children.Add(light);
+                return modelGroup;
             }
         }
         public OrthographicCamera Camera
@@ -82,6 +62,72 @@ namespace MvvmLight1.ViewModel
                 return this.camera;
             }
         }
+        public string MouseX
+        {
+            get
+            {
+                return String.Format("MouseX: {0}", this.mouseX.ToString());
+            }
+        }
+        public string MouseY
+        {
+            get
+            {
+                return String.Format("MouseY: {0}", this.mouseY.ToString());
+            }
+        }
+        public string SceneWidth
+        {
+            get
+            {
+                return String.Format("Width: {0}", this.sceneWidth.ToString());
+            }
+        }
+
+        public string SceneHeight
+        {
+            get
+            {
+                return String.Format("Height: {0}", this.sceneHeight.ToString());
+            }
+        }
+
+        public ICommand MouseMove
+        {
+            get
+            {
+                //if (mouseMove == null)
+                //{
+                   return new RelayCommand<MouseEventArgs>(this.MouseMoveEvent);
+                //}
+                //return mouseMove;
+            }
+        }
+
+        public ICommand SizeChanged
+        {
+            get
+            {
+                return new RelayCommand<SizeChangedEventArgs>(this.SizeChangedEvent);
+            }
+        }
+
+        public void MouseMoveEvent(MouseEventArgs e)
+        {
+            Point mousePosition = e.GetPosition((Canvas)e.Source);
+            mouseX = mousePosition.X;
+            mouseY = mousePosition.Y;
+            base.RaisePropertyChanged("MouseX");
+            base.RaisePropertyChanged("MouseY");
+        }
+        public void SizeChangedEvent(SizeChangedEventArgs e)
+        {
+            sceneWidth = e.NewSize.Width;
+            sceneHeight = e.NewSize.Height;
+            base.RaisePropertyChanged("SceneWidth");
+            base.RaisePropertyChanged("SceneHeight");
+        }
+
         private GeometryModel3D TestObject()
         {
             GeometryModel3D m = new GeometryModel3D();
