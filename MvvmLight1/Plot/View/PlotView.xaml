@@ -4,22 +4,81 @@
              xmlns:local="clr-namespace:Plot.View"
              xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
              xmlns:cmd="clr-namespace:GalaSoft.MvvmLight.Command;assembly=GalaSoft.MvvmLight.Platform"
+             xmlns:convert="clr-namespace:BusinessLogic.Converter;assembly=BusinessLogic"
+             xmlns:c2="clr-namespace:Plot.Converter"
              DataContext="{Binding Plot, Source={StaticResource Locator}}"
              HorizontalAlignment="Stretch"
              VerticalAlignment="Stretch">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <c2:RealToWorldCoordinates x:Key="RealToWorld"/> <!--MouseCoord="0" SceneWidth="{Binding Path=SceneWidth}" />-->
+            <!--<Style TargetType="TextBlock">
+                <Setter Property="Text">
+                    <Setter.Value>
+                        <MultiBinding Converter="{StaticResource ResourceKey=RealToWorld}">
+                            <Binding Path="MouseX" RelativeSource="{Binding Path=MouseX}"/>
+                            <Binding Path="{Binding Path=SceneWidth}"/>
+                        </MultiBinding>
+                    </Setter.Value>
+                </Setter>
+            </Style>-->
+        </ResourceDictionary>
+    </UserControl.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="3*"/>
         </Grid.RowDefinitions>
-        <StackPanel Grid.Row="0" VerticalAlignment="Top">
-            <TextBlock Text="{Binding Path=MouseX}"/>
-            <TextBlock Text="{Binding Path=MouseY}"/>
-            <TextBlock Text="{Binding Path=SceneWidth}"/>
-            <TextBlock Text="{Binding Path=SceneHeight}"/>
-        </StackPanel>
+        <!-- Top Row: Info Section-->
+        <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <StackPanel Grid.Column="0">
+                <StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="MouseX: " />
+                        <TextBlock>
+                            <TextBlock.Text>
+                                <MultiBinding Converter="{StaticResource ResourceKey=RealToWorld}">
+                                    <Binding Path="MouseX" />
+                                    <Binding Path="SceneWidth" />
+                                    <Binding Path="SceneHeight" />
+                                    <Binding Path="WorldWidth" />
+                                </MultiBinding>
+                            </TextBlock.Text>
+                        </TextBlock>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="MouseY: " />
+                        <TextBlock>
+                            <TextBlock.Text>
+                                <MultiBinding Converter="{StaticResource ResourceKey=RealToWorld}">
+                                    <Binding Path="MouseY" />
+                                    <Binding Path="SceneWidth" />
+                                    <Binding Path="SceneHeight" />
+                                    <Binding Path="WorldWidth" Mode="TwoWay" />
+                                </MultiBinding>
+                            </TextBlock.Text>
+                        </TextBlock>
+                    </StackPanel>
+                    <TextBlock Text="{Binding Path=SceneWidth}"/>
+                    <TextBlock Text="{Binding Path=SceneHeight}"/>
+                </StackPanel>
+            </StackPanel>
+            <StackPanel Grid.Column="1" Orientation="Horizontal">
+                <TextBlock MaxHeight="20" Text="Width: "/>
+                <TextBox MaxHeight="20" Text="{Binding Path=WorldWidth}" />
+                <TextBlock MaxHeight="20" Text="Height: "/>
+            </StackPanel>
+        </Grid>
+        <!-- Bottom Row: Canvas Section -->
         <Canvas x:Name="MouseCanvas" Background="Transparent" Grid.Row="1"> 
             <i:Interaction.Triggers>
+                <i:EventTrigger EventName="Loaded">
+                    <cmd:EventToCommand Command="{Binding Initialized}" PassEventArgsToCommand="True" />
+                </i:EventTrigger>
                 <i:EventTrigger EventName="MouseMove">
                     <cmd:EventToCommand Command="{Binding MouseMove}" PassEventArgsToCommand="True" />
                     <!--<i:InvokeCommandAction Command="{Binding MouseMove}" CommandParameter="{x:Reference MouseCanvas}"/>-->
@@ -29,7 +88,7 @@
                 </i:EventTrigger>
             </i:Interaction.Triggers>
         </Canvas>
-        <Viewport3D Camera="{Binding Camera}" Grid.Row="1">
+        <Viewport3D Camera="{Binding Camera}" Grid.Row="1" IsHitTestVisible="False" ClipToBounds="True">
             <Viewport3D.Children>
                 <ModelVisual3D Content="{Binding Objects}" />
             </Viewport3D.Children>

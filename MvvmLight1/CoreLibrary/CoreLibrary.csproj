@@ -63,6 +63,7 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Constants\ScalingConstants.cs" />
     <Compile Include="DataAccess\DataRepository.cs" />
     <Compile Include="Message\EditMessage.cs" />
     <Compile Include="Model\ILine.cs" />
@@ -70,6 +71,7 @@
     <Compile Include="Model\IShape.cs" />
     <Compile Include="Model\ModelTransformations.cs" />
     <Compile Include="Model\PointSetShape.cs" />
+    <Compile Include="Model\ScalingFactors.cs" />
     <Compile Include="Model\ShapeAddedEventArgs.cs" />
     <Compile Include="Model\ShapeEditEventArgs.cs" />
     <Compile Include="Model\SlopeInterceptShape.cs" />

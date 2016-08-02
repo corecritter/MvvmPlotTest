@@ -9,6 +9,6 @@ namespace CoreLibrary.Model
 {
     public interface IShape
     {
-        GeometryModel3D GetShape();
+        GeometryModel3D GetShape(ScalingFactors scalingFactors);
     }
 }

@@ -19,7 +19,7 @@ namespace CoreLibrary.Model
             get; set;
         }
 
-        public GeometryModel3D GetShape()
+        public GeometryModel3D GetShape(ScalingFactors scalingFactors)
         {
             return null;
         }

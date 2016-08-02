@@ -46,7 +46,7 @@
                     <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
 
-                <ListBox 
+                <ListBox
                     ItemsSource="{Binding Workspaces}" 
                     ItemTemplate="{StaticResource ListBoxItemTemplate}"
                     >

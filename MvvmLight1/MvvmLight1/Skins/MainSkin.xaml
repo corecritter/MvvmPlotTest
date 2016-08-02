@@ -19,7 +19,7 @@
     <DataTemplate DataType="{x:Type vm:LineInputViewModel}">
         <vw:LineInputView/>
     </DataTemplate>
-    
+
     <DataTemplate x:Key="ClosableTabItemTemplate">
         <DockPanel Width="120">
             <Button 

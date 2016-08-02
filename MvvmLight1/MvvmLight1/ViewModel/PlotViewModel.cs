@@ -1,4 +1,7 @@
-﻿using CoreLibrary.DataAccess;
+﻿using CoreLibrary.Constants;
+using CoreLibrary.DataAccess;
+using CoreLibrary.Model;
+using CoreLibrary.Model.StandardShapes;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using System;
@@ -27,29 +30,43 @@ namespace MvvmLight1.ViewModel
         private double sceneWidth;
         private double sceneHeight;
 
+        private double worldWidth;
+
+        private ScalingFactors scalingFactors;
+
         public PlotViewModel(DataRepository dataRepository)
         {
-            position = new Point3D(-40, 40, 40);
-            at = new Vector3D(40, -40, -40);
-            //position = new Point3D(0, 0, 1);
-            //at = new Vector3D(0, 0, -1);
+            //position = new Point3D(-40, 40, 40);
+            //at = new Vector3D(40, -40, -40);
+            position = new Point3D(0, 0, 1);
+            at = new Vector3D(0, 0, -1);
             up = new Vector3D(0, 1, 0);
-            camera = new OrthographicCamera(position, at, up, 10);
+
+            worldWidth = 15;
+
+            camera = new OrthographicCamera(position, at, up, worldWidth);
             camera.NearPlaneDistance = 1;
             this._dataRepository = dataRepository;
+            sceneWidth = 1;
+            sceneHeight = 1;
+
+            scalingFactors = new ScalingFactors();
         }
 
         public Model3DGroup Objects
         {
             get
             {
+                scalingFactors.segmentScale = worldWidth / ScalingConstants.Segment_Scale;
+                scalingFactors.pointScale = worldWidth / ScalingConstants.Point_Scale;
                 Model3DGroup modelGroup = new Model3DGroup();
                 foreach (var shape in this._dataRepository.GetShapes())
                 {
-                    var o = shape.GetShape();
+                    var o = shape.GetShape(scalingFactors);
                     if (o != null)
-                        modelGroup.Children.Add(shape.GetShape());
+                        modelGroup.Children.Add(shape.GetShape(scalingFactors));
                 }
+                modelGroup.Children.Add(TestSquare());
                 DirectionalLight light = new DirectionalLight(Colors.White, new Vector3D(-1, -1, -3));
                 modelGroup.Children.Add(light);
                 return modelGroup;
@@ -62,33 +79,67 @@ namespace MvvmLight1.ViewModel
                 return this.camera;
             }
         }
-        public string MouseX
+        public double MouseX
         {
             get
             {
-                return String.Format("MouseX: {0}", this.mouseX.ToString());
+                //return String.Format("MouseX: {0}", this.mouseX.ToString());
+                return this.mouseX;
+            }
+            set
+            {
+                this.mouseX = value;
             }
         }
-        public string MouseY
+        public double MouseY
         {
             get
             {
-                return String.Format("MouseY: {0}", this.mouseY.ToString());
+                //return String.Format("MouseY: {0}", this.mouseY.ToString());
+                return this.mouseY;
             }
         }
-        public string SceneWidth
+        public double SceneWidth
         {
             get
             {
-                return String.Format("Width: {0}", this.sceneWidth.ToString());
+                //return String.Format("Width: {0}", this.sceneWidth.ToString());
+                return this.sceneWidth;
             }
         }
 
-        public string SceneHeight
+        public double SceneHeight
         {
             get
             {
-                return String.Format("Height: {0}", this.sceneHeight.ToString());
+                //return String.Format("Height: {0}", this.sceneHeight.ToString());
+                return this.sceneHeight;
+            }
+        }
+
+        public double WorldWidth
+        {
+            get
+            {
+                return this.worldWidth;
+            }
+            set
+            {
+                this.worldWidth = value;
+                camera.Width = worldWidth;
+                base.RaisePropertyChanged("WorldWidth");
+                base.RaisePropertyChanged("Camera");
+                base.RaisePropertyChanged("Objects");
+                base.RaisePropertyChanged("MouseX");
+                base.RaisePropertyChanged("MouseY");
+            }
+        }
+        #region Commands
+        public ICommand Initialized
+        {
+            get
+            {
+                return new RelayCommand<RoutedEventArgs>(this.PlotInitializedEvent);
             }
         }
 
@@ -96,11 +147,7 @@ namespace MvvmLight1.ViewModel
         {
             get
             {
-                //if (mouseMove == null)
-                //{
-                   return new RelayCommand<MouseEventArgs>(this.MouseMoveEvent);
-                //}
-                //return mouseMove;
+                return new RelayCommand<MouseEventArgs>(this.MouseMoveEvent);
             }
         }
 
@@ -110,6 +157,16 @@ namespace MvvmLight1.ViewModel
             {
                 return new RelayCommand<SizeChangedEventArgs>(this.SizeChangedEvent);
             }
+        }
+        #endregion
+
+        public void PlotInitializedEvent(RoutedEventArgs e)
+        {
+            sceneWidth = ((Canvas)e.Source).ActualWidth;
+            sceneHeight = ((Canvas)e.Source).ActualHeight;
+
+            base.RaisePropertyChanged("SceneWidth");
+            base.RaisePropertyChanged("SceneHeight");
         }
 
         public void MouseMoveEvent(MouseEventArgs e)
@@ -124,8 +181,29 @@ namespace MvvmLight1.ViewModel
         {
             sceneWidth = e.NewSize.Width;
             sceneHeight = e.NewSize.Height;
+
+            scalingFactors.sceneAspectRatio = sceneWidth / sceneHeight;
+            scalingFactors.sceneScalingRatio = 1 / (((2 / sceneHeight - 1) * (-1)) * scalingFactors.sceneAspectRatio);
+
             base.RaisePropertyChanged("SceneWidth");
             base.RaisePropertyChanged("SceneHeight");
+            base.RaisePropertyChanged("Objects");
+        }
+
+        private GeometryModel3D TestSquare()
+        {
+            GeometryModel3D model = new GeometryModel3D();
+            model.Geometry = StandardSquare.CreateSquare();
+
+            ModelTransformations transform = new ModelTransformations();
+            transform.scale(.5, .5);
+
+            DiffuseMaterial material = new DiffuseMaterial();
+            SolidColorBrush brush = new SolidColorBrush(Colors.Black);
+            material.Brush = brush;
+            model.Material = material;
+            model.Transform = transform.getTransformations();
+            return model;
         }
 
         private GeometryModel3D TestObject()
