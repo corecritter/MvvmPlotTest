@@ -4,11 +4,50 @@
              xmlns:local="clr-namespace:Plot.View"
              DataContext="{Binding Plot, Source={StaticResource Locator}}"
              Width="300" Height="300">
-    <StackPanel>
-        <Border  BorderBrush="Green" BorderThickness="5" Height="300">
-            <Viewport3D Width="300" Height="300">
+    <!--<Viewport3D>
+        <Viewport3D.Camera>
+            <PerspectiveCamera Position="-40,40,40" LookDirection="40,-40,-40 " 
+                         UpDirection="0,0,1" />
+        </Viewport3D.Camera>
+        <ModelVisual3D>
+            <ModelVisual3D.Content>
+                <Model3DGroup>
+                    <DirectionalLight Color="White" Direction="-1,-1,-3" />
+                    <GeometryModel3D>
+                        <GeometryModel3D.Geometry>
+                            <MeshGeometry3D Positions="0,0,0 10,0,0 10,10,0 0,10,0 0,0,10 
+                        10,0,10 10,10,10 0,10,10"
+                        TriangleIndices="0 1 3 1 2 3  0 4 3 4 7 3  4 6 7 4 5 6 
+                                         0 4 1 1 4 5  1 2 6 6 5 1  2 3 7 7 6 2"/>
+                        </GeometryModel3D.Geometry>
+                        <GeometryModel3D.Material>
+                            <DiffuseMaterial Brush="Red"/>
+                        </GeometryModel3D.Material>
+                    </GeometryModel3D>
+                </Model3DGroup>
+            </ModelVisual3D.Content>
+        </ModelVisual3D>
+    </Viewport3D>-->
+    <!--<UserControl.Resources>
+        <DataTemplate>
+            <StackPanel>
+                <DockPanel>
+                    <Viewbox>
+                        <Canvas Widh="321" Height="201">
+                            <Viewport3D DataContext="{Binding ViewPort}">
+                            </Viewport3D>
+                        </Canvas>
+                    </Viewbox>
+                </DockPanel>
+            </StackPanel>
+        </DataTemplate>
+
+    </UserControl.Resources>-->
+    <Border Width="300" Height="300" BorderBrush="Azure" BorderThickness="5"> 
+    <Viewport3D  Camera="{Binding Camera}">
+        <Viewport3D.Children>
             <ModelVisual3D Content="{Binding Objects}" />
-            </Viewport3D>
-        </Border>
-    </StackPanel>
+        </Viewport3D.Children>
+    </Viewport3D>
+    </Border>
 </UserControl>

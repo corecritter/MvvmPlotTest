@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:MvvmLight1.View"
         xmlns:controls ="clr-namespace:Controls.View;assembly=Controls"
         mc:Ignorable="d"
-        Height="300" Width="300"
+        Height="Auto" Width="Auto"
         Title="MVVM Light Application"
         DataContext="{Binding Main, Source={StaticResource Locator}}">
     <Window.Resources>
