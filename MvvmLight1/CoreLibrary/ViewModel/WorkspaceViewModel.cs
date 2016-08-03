@@ -49,5 +49,14 @@ namespace CoreLibrary.ViewModel
                 this.AllInputs.Add((InputViewModel)viewModel);
             }
         }
+
+        public void OnShapeDeletedFromRepository(object sender, ShapeAddedEventArgs e)
+        {
+            if(e.Sender.GetType() == InputType)
+            {
+                var viewModel = e.Sender;
+                this.AllInputs.Remove((InputViewModel)viewModel);
+            }
+        }
     }
 }

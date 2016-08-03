@@ -65,6 +65,7 @@
   <ItemGroup>
     <Compile Include="Constants\ScalingConstants.cs" />
     <Compile Include="DataAccess\DataRepository.cs" />
+    <Compile Include="Message\DeleteMessage.cs" />
     <Compile Include="Message\EditMessage.cs" />
     <Compile Include="Model\ILine.cs" />
     <Compile Include="Model\IPointSet.cs" />
@@ -78,11 +79,15 @@
     <Compile Include="Model\StandardShapes\StandardSquare.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utilities\PlotUtilities.cs" />
+    <Compile Include="ViewModel\EditPanelViewModel.cs" />
     <Compile Include="ViewModel\InputViewModel.cs" />
     <Compile Include="ViewModel\WorkspaceViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Skins\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

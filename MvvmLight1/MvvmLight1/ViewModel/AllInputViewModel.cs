@@ -21,6 +21,7 @@ namespace MvvmLight1.ViewModel
         {
             this.AllInputs.CollectionChanged += this.OnCollectionChanged;
             this._dataRepository.ShapeAdded += this.OnShapeAddedToRepository;
+            this._dataRepository.ShapeDeleted += this.OnShapeDeletedFromRepository;
             this.InputType = typeof(PointInputViewModel);
             //Test Data
             //for (int i = 0; i < 5; i++)

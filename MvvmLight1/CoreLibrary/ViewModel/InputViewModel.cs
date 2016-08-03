@@ -14,24 +14,14 @@ namespace CoreLibrary.ViewModel
 {
     public class InputViewModel : WorkspaceViewModel
     {
-        RelayCommand _saveCommand;
+        private RelayCommand _saveCommand;
+        private RelayCommand _deleteCommand;
         protected IShape _shape;
         private bool _isSelected;
+        private EditPanelViewModel _editPanel;
         public InputViewModel(DataRepository dataRepository) : base(dataRepository)
         {
 
-        }
-
-        public ICommand SaveCommand
-        {
-            get
-            {
-                if (_saveCommand == null)
-                {
-                    _saveCommand = new RelayCommand(this.Save, this.CanSave);
-                }
-                return _saveCommand;
-            }
         }
 
         //Uses BooleanToVisibilityConverter
@@ -60,16 +50,56 @@ namespace CoreLibrary.ViewModel
             }
         }
 
+        public EditPanelViewModel EditPanel
+        {
+            get
+            {
+                if (this._editPanel == null)
+                {
+                    this._editPanel = new EditPanelViewModel(this._dataRepository, this._shape);
+                }
+                return this._editPanel;
+            }
+        }
+        public ICommand SaveCommand
+        {
+            get
+            {
+                if (_saveCommand == null)
+                {
+                    _saveCommand = new RelayCommand(this.Save, this.CanSave);
+                }
+                return _saveCommand;
+            }
+        }
         public void Save()
         {
             _dataRepository.AddShape(this, this._shape);
-            //Removes the save button Visibility after the shape is saved
-            base.RaisePropertyChanged("ShowSaveButton");
+            //Toggles button visibility
+            base.RaisePropertyChanged("EditPanel");
         }
 
         public bool CanSave()
         {
             return !_dataRepository.ContainsShape(this._shape);
+        }
+
+        public ICommand DeleteCommand
+        {
+            get
+            {
+                if (_deleteCommand == null)
+                {
+                    _deleteCommand = new RelayCommand(this.Delete);
+                }
+                return _deleteCommand;
+            }
+        }
+
+        public void Delete()
+        {
+            if (_dataRepository.RemoveShape(this, this._shape))
+                Messenger.Default.Send<DeleteMessage>(new DeleteMessage { ViewModel = this });
         }
     }
 }

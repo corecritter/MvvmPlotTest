@@ -60,9 +60,9 @@ namespace MvvmLight1.ViewModel
                 Model3DGroup modelGroup = new Model3DGroup();
                 foreach (var shape in this._dataRepository.GetShapes())
                 {
-                    var o = shape.GetShape(scalingFactors);
-                    if (o != null)
-                        modelGroup.Children.Add(shape.GetShape(scalingFactors));
+                    var plotObject = shape.GetShape(scalingFactors);
+                    if (plotObject != null)
+                        modelGroup.Children.Add(plotObject);
                 }
                 //Add the lighting
                 DirectionalLight light = new DirectionalLight(Colors.White, new Vector3D(-1, -1, -3));

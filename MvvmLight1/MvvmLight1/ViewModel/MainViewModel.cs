@@ -87,6 +87,13 @@ namespace MvvmLight1.ViewModel
                     var viewModel = msg.ViewModel;
                     ChangeCurrentWorkspace((WorkspaceViewModel)viewModel);
                 });
+            Messenger.Default.Register<DeleteMessage>(
+                this,
+                msg =>
+                {
+                    var viewModel = msg.ViewModel;
+                    ChangeCurrentWorkspace(null);
+                });
         }
 
         public Dictionary<string, Type> AddOptions
@@ -176,7 +183,8 @@ namespace MvvmLight1.ViewModel
         {
             this.Workspaces.Remove(_currentWorkspace);
             this._currentWorkspace = newWorkspace;
-            this.Workspaces.Add(this._currentWorkspace);
+            if(newWorkspace !=null)
+                this.Workspaces.Add(this._currentWorkspace);
         }
         #endregion
         ////public override void Cleanup()

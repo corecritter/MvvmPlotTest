@@ -59,7 +59,7 @@
                     <ComboBox
                         ItemsSource="{Binding Path=AddOptions.Keys}"
                         SelectedItem="{Binding Path=SelectedOption}">
-                        
+
                     </ComboBox>
                     <Button
                         Command="{Binding Path=AddCommand}"
@@ -83,10 +83,5 @@
                 <UserControl Content="{StaticResource PlotTemplate}"/>
             </Grid>
         </Grid>
-
-
-
-        
-
     </DockPanel>
 </Window>

@@ -12,6 +12,7 @@ namespace CoreLibrary.DataAccess
         readonly List<IShape> _shapes;
 
         public event EventHandler<ShapeAddedEventArgs> ShapeAdded;
+        public event EventHandler<ShapeAddedEventArgs> ShapeDeleted;
 
         public DataRepository()
         {
@@ -40,6 +41,23 @@ namespace CoreLibrary.DataAccess
                 if (this.ShapeAdded != null)
                     this.ShapeAdded(this, new ShapeAddedEventArgs(sender, shape));
             }
+        }
+
+        public bool RemoveShape(object sender, IShape shape)
+        {
+            if (shape == null)
+                throw new ArgumentException("null shape");
+
+            if (ContainsShape(shape))
+            {
+                this._shapes.Remove(shape);
+
+                if (this.ShapeDeleted != null)
+                    this.ShapeDeleted(this, new Model.ShapeAddedEventArgs(sender, shape));
+
+                return true;
+            }
+            return false;
         }
     }
 }
