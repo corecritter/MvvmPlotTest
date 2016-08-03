@@ -8,9 +8,13 @@ namespace CoreLibrary.Model
 {
     public class ScalingFactors
     {
-        public double sceneAspectRatio { get; set; } //(Actual Width/ Actual Height)
-        public double sceneScalingRatio { get; set; }
-        public double segmentScale { get; set; }
-        public double pointScale { get; set; }
+        public double SceneAspectRatio { get; set; } //(Actual Width/ Actual Height)
+        public double SceneScalingRatio { get; set; }
+        public double SegmentScale { get; set; }
+        public double PointScale { get; set; }
+        public double SceneWidth { get; set; }
+        public double SceneHeight { get; set; }
+        public double WorldWidth { get; set; }
+        public double WorldHeight { get; set; }
     }
 }

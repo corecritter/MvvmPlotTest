@@ -8,7 +8,7 @@ namespace CoreLibrary.Constants
 {
     public class ScalingConstants
     {
-        public const double Segment_Scale = 1500;
+        public const double Segment_Scale = 1000;
         public const double Point_Scale = 250;
     }
 }

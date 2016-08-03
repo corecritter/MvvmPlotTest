@@ -46,6 +46,22 @@ namespace MvvmLight1.ViewModel
             testPoint2.y1 = -1;
             testPoint2.y2 = 1;
             this._dataRepository.AddShape(temp2.GetType(), testPoint2);
+
+            PointInputViewModel temp3 = new PointInputViewModel(null, null);
+            PointSetShape testPoint3 = new PointSetShape();
+            testPoint3.x1 = -1;
+            testPoint3.x2 = 1;
+            testPoint3.y1 = 1;
+            testPoint3.y2 = -1;
+            this._dataRepository.AddShape(temp3.GetType(), testPoint3);
+
+            PointInputViewModel temp4 = new PointInputViewModel(null, null);
+            PointSetShape testPoint4 = new PointSetShape();
+            testPoint4.x1 = 0;
+            testPoint4.x2 = 0;
+            testPoint4.y1 = 1;
+            testPoint4.y2 = -1;
+            //this._dataRepository.AddShape(temp4.GetType(), testPoint4);
             //base.DisplayName = "All Inputs";
         }
 

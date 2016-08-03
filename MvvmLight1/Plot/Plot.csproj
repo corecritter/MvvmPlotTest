@@ -88,6 +88,10 @@
       <Project>{6691e1fe-5ddb-44f7-9dce-5e327d2fdff3}</Project>
       <Name>BusinessLogic</Name>
     </ProjectReference>
+    <ProjectReference Include="..\CoreLibrary\CoreLibrary.csproj">
+      <Project>{EDA06180-A310-4D8B-9F45-D90A1D870081}</Project>
+      <Name>CoreLibrary</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

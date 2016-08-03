@@ -6,6 +6,7 @@
              xmlns:cmd="clr-namespace:GalaSoft.MvvmLight.Command;assembly=GalaSoft.MvvmLight.Platform"
              xmlns:convert="clr-namespace:BusinessLogic.Converter;assembly=BusinessLogic"
              xmlns:c2="clr-namespace:Plot.Converter"
+             xmlns:sys="clr-namespace:System;assembly=mscorlib"
              DataContext="{Binding Plot, Source={StaticResource Locator}}"
              HorizontalAlignment="Stretch"
              VerticalAlignment="Stretch">
@@ -22,6 +23,8 @@
                     </Setter.Value>
                 </Setter>
             </Style>-->
+            <sys:Boolean x:Key="isY">true</sys:Boolean>
+            <sys:Boolean x:Key="isX">false</sys:Boolean>
         </ResourceDictionary>
     </UserControl.Resources>
     <Grid>
@@ -43,9 +46,9 @@
                             <TextBlock.Text>
                                 <MultiBinding Converter="{StaticResource ResourceKey=RealToWorld}">
                                     <Binding Path="MouseX" />
-                                    <Binding Path="SceneWidth" />
-                                    <Binding Path="SceneHeight" />
-                                    <Binding Path="WorldWidth" />
+                                    <Binding Path="ScaleFactors" />
+                                    <Binding Source="{StaticResource isX}">
+                                    </Binding>
                                 </MultiBinding>
                             </TextBlock.Text>
                         </TextBlock>
@@ -56,9 +59,8 @@
                             <TextBlock.Text>
                                 <MultiBinding Converter="{StaticResource ResourceKey=RealToWorld}">
                                     <Binding Path="MouseY" />
-                                    <Binding Path="SceneWidth" />
-                                    <Binding Path="SceneHeight" />
-                                    <Binding Path="WorldWidth" Mode="TwoWay" />
+                                    <Binding Path="ScaleFactors" />
+                                    <Binding Source="{StaticResource isY}" />
                                 </MultiBinding>
                             </TextBlock.Text>
                         </TextBlock>
@@ -71,8 +73,12 @@
                 <TextBlock MaxHeight="20" Text="Width: "/>
                 <TextBox MaxHeight="20" Text="{Binding Path=WorldWidth}" />
                 <TextBlock MaxHeight="20" Text="Height: "/>
+                <TextBox MaxHeight="20" Text="{Binding Path=WorldHeight}" />
+                <!--<TextBlock MaxHeight="20" Text="MinX: "/>
+                <TextBox MaxHeight="20" Text="{Binding Path=}" />-->
             </StackPanel>
         </Grid>
+        <Border Grid.Row="1" BorderBrush="Green" BorderThickness="5"/>
         <!-- Bottom Row: Canvas Section -->
         <Canvas x:Name="MouseCanvas" Background="Transparent" Grid.Row="1"> 
             <i:Interaction.Triggers>
@@ -88,10 +94,10 @@
                 </i:EventTrigger>
             </i:Interaction.Triggers>
         </Canvas>
-        <Viewport3D Camera="{Binding Camera}" Grid.Row="1" IsHitTestVisible="False" ClipToBounds="True">
-            <Viewport3D.Children>
-                <ModelVisual3D Content="{Binding Objects}" />
-            </Viewport3D.Children>
-        </Viewport3D>
+            <Viewport3D Camera="{Binding Camera}" Grid.Row="1" IsHitTestVisible="False" ClipToBounds="True">
+                <Viewport3D.Children>
+                    <ModelVisual3D Content="{Binding Objects}" />
+                </Viewport3D.Children>
+            </Viewport3D>
     </Grid>
 </UserControl>

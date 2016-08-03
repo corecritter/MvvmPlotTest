@@ -1,9 +1,11 @@
 ﻿using CoreLibrary.Model.StandardShapes;
+using CoreLibrary.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Media;
 using System.Windows.Media.Media3D;
 
@@ -18,18 +20,37 @@ namespace CoreLibrary.Model
 
         public GeometryModel3D GetShape(ScalingFactors scalingFactors)
         {
+            double slope = PlotUtilities.CalculateSlope(x1, y1, x2, y2);
+            double yInt;
+            
             //Find midpoint of two points
-            double midX = (x1 + x2) / 2.0;                      
+            double midX = (x1 + x2) / 2.0;
             double midY = (y1 + y2) / 2.0;
-            //Length of segment
-            double length = Math.Sqrt(Math.Pow((x1-x2), 2) + Math.Pow((y1-y2), 2));
-            //Slope
-            double m = (y2 - y1) / (x2 - x1);
+
+            double length;
+            //Length of Line from canvas edge to edge
+            if (Double.IsInfinity(slope))
+            {
+                yInt = 0;
+                length = PlotUtilities.CalculateLength(PlotUtilities.CalcZeroSlopeEdgePoints(scalingFactors, yInt));
+            }
+            else
+            {
+                //Length of segment
+                //double length = Math.Sqrt(Math.Pow((x1-x2), 2) + Math.Pow((y1-y2), 2));
+                yInt = PlotUtilities.CalculateYIntercept(x1, y1, slope);
+                length = PlotUtilities.CalculateLength(PlotUtilities.CalcEdgePoints(scalingFactors, slope, yInt));
+            }
+           
             ModelTransformations transformations = new ModelTransformations();
-            //Scale x and y appropriately
-            transformations.scale((length / 2), scalingFactors.segmentScale);
             //Rotation angle (arcTan of height/width converted to degrees)
-            transformations.rotate((180 / Math.PI) * Math.Atan(m));
+            double rotationAngle = (180 / Math.PI) * Math.Atan(slope);
+            
+            //Scale x and y appropriately
+            double yScaleFactor = PlotUtilities.CalcYObjectScaleFactor(scalingFactors, rotationAngle);
+            transformations.scale((length / 2), yScaleFactor);
+            
+            transformations.rotate(rotationAngle);
             //Translate to midpoint
             transformations.translate(midX, midY);
 

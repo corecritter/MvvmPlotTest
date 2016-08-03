@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CoreLibrary.Model;
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
@@ -67,10 +68,33 @@ namespace Plot.Converter
              */
 
             //Convert to [-1, 1] range
-            double worldCoord = (2 * (double)values[0]) / (double)values[1] - 1;
-            //Convert To World Coordinates
-            worldCoord = (worldCoord * (double)values[3]) / 2.0;
-            return worldCoord.ToString();
+            //double worldCoord = (2 * (double)values[0]) / (double)values[1] - 1;
+            ////Convert To World Coordinates
+            //worldCoord = (worldCoord * (double)values[3]) / 2.0;
+            //return worldCoord.ToString();
+            if (values[1].GetType().Equals(typeof(ScalingFactors)))
+            {
+                bool isY = (bool)values[2];
+                double mouseCoord = (double)values[0];
+                ScalingFactors scalingFactors = (ScalingFactors)values[1];
+                
+                //
+                double worldCoord = 0;
+                //Convert to [-1, 1] range, then To World Coordinates
+                if (isY)
+                {
+                    worldCoord = (2 * mouseCoord) / scalingFactors.SceneHeight - 1;
+                    worldCoord = (worldCoord * scalingFactors.WorldHeight) / 2.0;
+                    worldCoord = -worldCoord;
+                }
+                else
+                {
+                    worldCoord = (2 * mouseCoord) / scalingFactors.SceneWidth - 1;
+                    worldCoord = (worldCoord * scalingFactors.WorldWidth) / 2.0;
+                }
+                return worldCoord.ToString();
+            }
+            return 0.ToString();
         }
 
         object[] IMultiValueConverter.ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)

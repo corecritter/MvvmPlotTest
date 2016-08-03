@@ -2,6 +2,7 @@
 using CoreLibrary.DataAccess;
 using CoreLibrary.Model;
 using CoreLibrary.Model.StandardShapes;
+using CoreLibrary.Utilities;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using System;
@@ -27,38 +28,32 @@ namespace MvvmLight1.ViewModel
         private double mouseX;
         private double mouseY;
 
-        private double sceneWidth;
-        private double sceneHeight;
-
-        private double worldWidth;
-
         private ScalingFactors scalingFactors;
 
         public PlotViewModel(DataRepository dataRepository)
         {
+            scalingFactors = new ScalingFactors();
             //position = new Point3D(-40, 40, 40);
             //at = new Vector3D(40, -40, -40);
             position = new Point3D(0, 0, 1);
             at = new Vector3D(0, 0, -1);
             up = new Vector3D(0, 1, 0);
 
-            worldWidth = 15;
+            scalingFactors.WorldWidth = 10;
+            scalingFactors.WorldHeight = 5;
 
-            camera = new OrthographicCamera(position, at, up, worldWidth);
+            camera = new OrthographicCamera(position, at, up, WorldWidth);
             camera.NearPlaneDistance = 1;
             this._dataRepository = dataRepository;
-            sceneWidth = 1;
-            sceneHeight = 1;
-
-            scalingFactors = new ScalingFactors();
+            scalingFactors.SceneWidth = 1;
+            scalingFactors.SceneHeight = 1;
         }
 
         public Model3DGroup Objects
         {
             get
             {
-                scalingFactors.segmentScale = worldWidth / ScalingConstants.Segment_Scale;
-                scalingFactors.pointScale = worldWidth / ScalingConstants.Point_Scale;
+                //Add the shapes
                 Model3DGroup modelGroup = new Model3DGroup();
                 foreach (var shape in this._dataRepository.GetShapes())
                 {
@@ -66,9 +61,22 @@ namespace MvvmLight1.ViewModel
                     if (o != null)
                         modelGroup.Children.Add(shape.GetShape(scalingFactors));
                 }
-                modelGroup.Children.Add(TestSquare());
+                //Add the lighting
                 DirectionalLight light = new DirectionalLight(Colors.White, new Vector3D(-1, -1, -3));
                 modelGroup.Children.Add(light);
+                
+                //Scale the group
+                if (scalingFactors.SceneScalingRatio != 0)
+                {
+                    ModelTransformations transform = new ModelTransformations();
+                    //transform.scale(scalingFactors.sceneScalingRatio);// sceneHeight / worldHeight * scalingFactors.sceneScalingRatio);
+                    double scale = PlotUtilities.CalcYHeightScaleFactor(scalingFactors);//((SceneHeight / WorldHeight) / (SceneWidth / WorldWidth));// * 1 / scalingFactors.sceneScalingRatio;
+                    transform.scale(scale);
+                    var transforms = transform.getTransformations();
+
+                    modelGroup.Transform = transforms;
+                }
+
                 return modelGroup;
             }
         }
@@ -104,7 +112,7 @@ namespace MvvmLight1.ViewModel
             get
             {
                 //return String.Format("Width: {0}", this.sceneWidth.ToString());
-                return this.sceneWidth;
+                return scalingFactors.SceneWidth;
             }
         }
 
@@ -113,7 +121,7 @@ namespace MvvmLight1.ViewModel
             get
             {
                 //return String.Format("Height: {0}", this.sceneHeight.ToString());
-                return this.sceneHeight;
+                return scalingFactors.SceneHeight;
             }
         }
 
@@ -121,17 +129,38 @@ namespace MvvmLight1.ViewModel
         {
             get
             {
-                return this.worldWidth;
+                return scalingFactors.WorldWidth;
             }
             set
             {
-                this.worldWidth = value;
-                camera.Width = worldWidth;
+                scalingFactors.WorldWidth = value;
+                camera.Width = scalingFactors.WorldWidth;
                 base.RaisePropertyChanged("WorldWidth");
                 base.RaisePropertyChanged("Camera");
-                base.RaisePropertyChanged("Objects");
-                base.RaisePropertyChanged("MouseX");
-                base.RaisePropertyChanged("MouseY");
+                ScaleChange();
+            }
+        }
+
+        public double WorldHeight
+        {
+            get
+            {
+                return scalingFactors.WorldHeight;
+            }
+            set
+            {
+                scalingFactors.WorldHeight = value;
+                base.RaisePropertyChanged("WorldHeight");
+                ScaleChange();
+            }
+
+        }
+
+        public ScalingFactors ScaleFactors
+        {
+            get
+            {
+                return this.scalingFactors;
             }
         }
         #region Commands
@@ -159,16 +188,6 @@ namespace MvvmLight1.ViewModel
             }
         }
         #endregion
-
-        public void PlotInitializedEvent(RoutedEventArgs e)
-        {
-            sceneWidth = ((Canvas)e.Source).ActualWidth;
-            sceneHeight = ((Canvas)e.Source).ActualHeight;
-
-            base.RaisePropertyChanged("SceneWidth");
-            base.RaisePropertyChanged("SceneHeight");
-        }
-
         public void MouseMoveEvent(MouseEventArgs e)
         {
             Point mousePosition = e.GetPosition((Canvas)e.Source);
@@ -177,19 +196,36 @@ namespace MvvmLight1.ViewModel
             base.RaisePropertyChanged("MouseX");
             base.RaisePropertyChanged("MouseY");
         }
+
+        public void PlotInitializedEvent(RoutedEventArgs e)
+        {
+            scalingFactors.SceneWidth = ((Canvas)e.Source).ActualWidth;
+            scalingFactors.SceneHeight = ((Canvas)e.Source).ActualHeight;
+
+            ScaleChange();
+        }
+
         public void SizeChangedEvent(SizeChangedEventArgs e)
         {
-            sceneWidth = e.NewSize.Width;
-            sceneHeight = e.NewSize.Height;
+            scalingFactors.SceneWidth = e.NewSize.Width;
+            scalingFactors.SceneHeight = e.NewSize.Height;
 
-            scalingFactors.sceneAspectRatio = sceneWidth / sceneHeight;
-            scalingFactors.sceneScalingRatio = 1 / (((2 / sceneHeight - 1) * (-1)) * scalingFactors.sceneAspectRatio);
+            ScaleChange();
+        }
+
+        private void ScaleChange()
+        {
+            scalingFactors.SceneAspectRatio = SceneWidth / SceneHeight;
+            scalingFactors.SceneScalingRatio = 1 / (((2 / SceneHeight - 1) * (-1)) * scalingFactors.SceneAspectRatio);
+
+            double scale = Math.Max(WorldWidth, WorldHeight);
+            scalingFactors.SegmentScale = scale / ScalingConstants.Segment_Scale;
+            scalingFactors.PointScale = scale / ScalingConstants.Point_Scale;
 
             base.RaisePropertyChanged("SceneWidth");
             base.RaisePropertyChanged("SceneHeight");
             base.RaisePropertyChanged("Objects");
         }
-
         private GeometryModel3D TestSquare()
         {
             GeometryModel3D model = new GeometryModel3D();
