@@ -45,12 +45,16 @@ namespace MvvmLight1.ViewModel
             camera = new OrthographicCamera(position, at, up, WorldWidth);
             camera.NearPlaneDistance = 1;
             this._dataRepository = dataRepository;
-            //this._dataRepository.ShapeAdded += 
+            this._dataRepository.ShapeAdded += this.OnShapeAddedOrRemoved;
+            this._dataRepository.ShapeDeleted += this.OnShapeAddedOrRemoved;
             scalingFactors.SceneWidth = 1;
             scalingFactors.SceneHeight = 1;
         }
 
-        //public void OnShapeAddedToRepository(object sender, ShapeAddedEventArgs e)
+        public void OnShapeAddedOrRemoved(object sender, ShapeAddedEventArgs e)
+        {
+            base.RaisePropertyChanged("Objects");
+        }
 
         public Model3DGroup Objects
         {
@@ -79,7 +83,6 @@ namespace MvvmLight1.ViewModel
 
                     modelGroup.Transform = transforms;
                 }
-
                 return modelGroup;
             }
         }

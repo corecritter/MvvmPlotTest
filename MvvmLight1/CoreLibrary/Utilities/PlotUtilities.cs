@@ -23,7 +23,7 @@ namespace CoreLibrary.Utilities
             //Min scale
             double wMin = wMax * factors.SceneScalingRatio;
 
-            return ((wMax - wMin) * Math.Cos(rotationAngle) + wMin) + .01;
+            return (((wMax - wMin) * Math.Cos(rotationAngle) + wMin) + .01); //* 1/CalcYHeightScaleFactor(factors);
         }
 
         /// <summary>
@@ -98,8 +98,8 @@ namespace CoreLibrary.Utilities
         public static Point[] CalcUndefinedSlopeEdgePoints(ScalingFactors factors, double x)
         {
             //double maxLength = CalcMaxWidth(factors);
-            double y1 = factors.WorldWidth / 2.0;
-            double y2 = -factors.WorldWidth / 2.0;
+            double y1 = factors.WorldHeight / 2.0;
+            double y2 = -factors.WorldHeight / 2.0;
 
             Point[] points = new Point[] { new Point(x, y1), new Point(x, y2) };
             return points;
