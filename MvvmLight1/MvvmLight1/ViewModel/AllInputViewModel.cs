@@ -17,63 +17,46 @@ namespace MvvmLight1.ViewModel
 {
     public class AllInputViewModel : WorkspaceViewModel
     {
-        //public ObservableCollection<InputViewModel> AllInputs { get; set; }
-        //public ObservableCollection<CommandViewModel> _commands { get; set; }
-
-        //readonly DataRepository _dataRepository;
-
         public AllInputViewModel(DataRepository dataRepository) : base(dataRepository)
         {
-            //this.AllInputs = new ObservableCollection<InputViewModel>();
             this.AllInputs.CollectionChanged += this.OnCollectionChanged;
-
-            //this._dataRepository = dataRepository;
             this._dataRepository.ShapeAdded += this.OnShapeAddedToRepository;
-            for (int i = 0; i < 5; i++)
-            {
-                PointInputViewModel temp = new PointInputViewModel(null, null);
-                PointSetShape testPoint = new PointSetShape();
-                testPoint.x1 = i;
-                testPoint.x2 = i + 1;
-                testPoint.y1 = i + 2;
-                testPoint.y2 = i + 3;
-                this._dataRepository.AddShape(temp.GetType(), testPoint);
-            }
-            PointInputViewModel temp2 = new PointInputViewModel(null, null);
-            PointSetShape testPoint2 = new PointSetShape();
-            testPoint2.x1 = -1;
-            testPoint2.x2 = 1;
-            testPoint2.y1 = -1;
-            testPoint2.y2 = 1;
-            this._dataRepository.AddShape(temp2.GetType(), testPoint2);
+            this.InputType = typeof(PointInputViewModel);
+            //Test Data
+            //for (int i = 0; i < 5; i++)
+            //{
+            //    PointInputViewModel temp = new PointInputViewModel(null, null);
+            //    PointSetShape testPoint = new PointSetShape();
+            //    testPoint.x1 = i;
+            //    testPoint.x2 = i + 1;
+            //    testPoint.y1 = i + 2;
+            //    testPoint.y2 = i + 3;
+            //    this._dataRepository.AddShape(temp.GetType(), testPoint);
+            //}
+            //PointInputViewModel temp2 = new PointInputViewModel(null, null);
+            //PointSetShape testPoint2 = new PointSetShape();
+            //testPoint2.x1 = -1;
+            //testPoint2.x2 = 1;
+            //testPoint2.y1 = -1;
+            //testPoint2.y2 = 1;
+            //this._dataRepository.AddShape(temp2.GetType(), testPoint2);
 
-            PointInputViewModel temp3 = new PointInputViewModel(null, null);
-            PointSetShape testPoint3 = new PointSetShape();
-            testPoint3.x1 = -1;
-            testPoint3.x2 = 1;
-            testPoint3.y1 = 1;
-            testPoint3.y2 = -1;
-            this._dataRepository.AddShape(temp3.GetType(), testPoint3);
+            //PointInputViewModel temp3 = new PointInputViewModel(null, null);
+            //PointSetShape testPoint3 = new PointSetShape();
+            //testPoint3.x1 = -1;
+            //testPoint3.x2 = 1;
+            //testPoint3.y1 = 1;
+            //testPoint3.y2 = -1;
+            //this._dataRepository.AddShape(temp3.GetType(), testPoint3);
 
-            PointInputViewModel temp4 = new PointInputViewModel(null, null);
-            PointSetShape testPoint4 = new PointSetShape();
-            testPoint4.x1 = 0;
-            testPoint4.x2 = 0;
-            testPoint4.y1 = 1;
-            testPoint4.y2 = -1;
+            //PointInputViewModel temp4 = new PointInputViewModel(null, null);
+            //PointSetShape testPoint4 = new PointSetShape();
+            //testPoint4.x1 = 0;
+            //testPoint4.x2 = 0;
+            //testPoint4.y1 = 1;
+            //testPoint4.y2 = -1;
             //this._dataRepository.AddShape(temp4.GetType(), testPoint4);
             //base.DisplayName = "All Inputs";
-        }
-
-
-        void OnShapeAddedToRepository(object sender, ShapeAddedEventArgs e)
-        {
-            if (e.SenderType == typeof(PointInputViewModel))
-            {
-                var viewModel = Activator.CreateInstance(e.SenderType, new object[] { _dataRepository, e.NewShape });
-                //var viewModel = new PointInputViewModel(_dataRepository, (IPointSet)e.NewShape);
-                this.AllInputs.Add((InputViewModel)viewModel);
-            }
         }
     }
 }

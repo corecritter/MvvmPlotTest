@@ -32,7 +32,7 @@ namespace CoreLibrary.Model
             if (Double.IsInfinity(slope))
             {
                 yInt = 0;
-                length = PlotUtilities.CalculateLength(PlotUtilities.CalcZeroSlopeEdgePoints(scalingFactors, yInt));
+                length = PlotUtilities.CalculateLength(PlotUtilities.CalcUndefinedSlopeEdgePoints(scalingFactors, yInt));
             }
             else
             {

@@ -8,12 +8,12 @@ namespace CoreLibrary.Model
 {
     public class ShapeAddedEventArgs : EventArgs
     {
-        public Type SenderType { get; private set; }
+        public object Sender { get; private set; }
         public IShape NewShape { get; private set; }
 
-        public ShapeAddedEventArgs(Type senderType, IShape newShape)
+        public ShapeAddedEventArgs(object sender, IShape newShape)
         {
-            this.SenderType = senderType;
+            this.Sender = sender;
             this.NewShape = newShape;
         }
     }

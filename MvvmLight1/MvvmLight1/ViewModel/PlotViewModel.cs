@@ -40,14 +40,17 @@ namespace MvvmLight1.ViewModel
             up = new Vector3D(0, 1, 0);
 
             scalingFactors.WorldWidth = 10;
-            scalingFactors.WorldHeight = 5;
+            scalingFactors.WorldHeight = 10;
 
             camera = new OrthographicCamera(position, at, up, WorldWidth);
             camera.NearPlaneDistance = 1;
             this._dataRepository = dataRepository;
+            //this._dataRepository.ShapeAdded += 
             scalingFactors.SceneWidth = 1;
             scalingFactors.SceneHeight = 1;
         }
+
+        //public void OnShapeAddedToRepository(object sender, ShapeAddedEventArgs e)
 
         public Model3DGroup Objects
         {

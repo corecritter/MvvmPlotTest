@@ -62,7 +62,7 @@ namespace CoreLibrary.ViewModel
 
         public void Save()
         {
-            _dataRepository.AddShape(this.GetType(), this._shape);
+            _dataRepository.AddShape(this, this._shape);
             //Removes the save button Visibility after the shape is saved
             base.RaisePropertyChanged("ShowSaveButton");
         }

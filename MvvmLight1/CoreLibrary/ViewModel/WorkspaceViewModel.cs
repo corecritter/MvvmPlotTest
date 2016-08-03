@@ -1,4 +1,5 @@
 ﻿using CoreLibrary.DataAccess;
+using CoreLibrary.Model;
 using GalaSoft.MvvmLight;
 using System;
 using System.Collections.Generic;
@@ -14,9 +15,10 @@ namespace CoreLibrary.ViewModel
     public class WorkspaceViewModel : ViewModelBase
     {
         public ObservableCollection<InputViewModel> AllInputs { get; set; }
-        //public ObservableCollection<CommandViewModel> _commands { get; set; }
 
         public readonly DataRepository _dataRepository;
+
+        public Type InputType { get; set; }
 
         public WorkspaceViewModel(DataRepository dataRepository)
         {
@@ -38,6 +40,14 @@ namespace CoreLibrary.ViewModel
         public void OnInputViewModelPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
 
+        }
+        public void OnShapeAddedToRepository(object sender, ShapeAddedEventArgs e)
+        {
+            if (e.Sender.GetType() == InputType)
+            {
+                var viewModel = e.Sender;//Activator.CreateInstance(e.SenderType, new object[] { _dataRepository, e.NewShape });
+                this.AllInputs.Add((InputViewModel)viewModel);
+            }
         }
     }
 }

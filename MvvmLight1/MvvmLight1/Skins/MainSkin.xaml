@@ -53,7 +53,7 @@
     </DataTemplate>
 
     <DataTemplate x:Key="ListBoxItemTemplate">
-        <ListBoxItem  Content="{Binding}"/>
+        <ListBoxItem  Content="{Binding}" />
     </DataTemplate>
     
     <UserControl x:Key="PlotTemplate">

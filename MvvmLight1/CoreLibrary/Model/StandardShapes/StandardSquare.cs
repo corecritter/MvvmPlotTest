@@ -8,6 +8,9 @@ using System.Windows.Media.Media3D;
 
 namespace CoreLibrary.Model.StandardShapes
 {
+    /// <summary>
+    /// Creates a square centered at (0,0) with width/height of 2
+    /// </summary>
     public class StandardSquare
     {
         //private MeshGeometry3D meshGeometry3D; //To hold points

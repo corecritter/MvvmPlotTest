@@ -28,7 +28,7 @@ namespace CoreLibrary.DataAccess
             return _shapes.Contains(shape);
         }
 
-        public void AddShape(Type senderType, IShape shape)
+        public void AddShape(object sender, IShape shape)
         {
             if (shape == null)
                 throw new ArgumentException("null shape");
@@ -38,7 +38,7 @@ namespace CoreLibrary.DataAccess
                 this._shapes.Add(shape);
 
                 if (this.ShapeAdded != null)
-                    this.ShapeAdded(this, new ShapeAddedEventArgs(senderType, shape));
+                    this.ShapeAdded(this, new ShapeAddedEventArgs(sender, shape));
             }
         }
     }
