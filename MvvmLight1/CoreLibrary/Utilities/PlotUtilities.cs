@@ -18,12 +18,36 @@ namespace CoreLibrary.Utilities
         /// <returns></returns>
         public static double CalcYObjectScaleFactor(ScalingFactors factors, double rotationAngle)
         {
+            double yScale = CalcYHeightScaleFactor(factors);
+
             //Max scale
             double wMax = factors.SegmentScale;
             //Min scale
             double wMin = wMax * factors.SceneScalingRatio;
 
-            return (((wMax - wMin) * Math.Cos(rotationAngle) + wMin) + .01); //* 1/CalcYHeightScaleFactor(factors);
+            if (wMin > wMin * yScale)
+            {
+                wMin = wMax * factors.SceneScalingRatio * yScale;
+            }
+            else
+            {
+                wMax = wMax / yScale;
+            }
+
+            return Math.Min(Math.Max(wMin, wMax), (((wMax - wMin) * Math.Max(0, Math.Cos(rotationAngle)) + wMin) + .01));
+            //return (((wMax - wMin) * Math.Cos(rotationAngle) + wMin) + .01);
+        }
+
+        /// <summary>
+        /// Calculates the Y scaling factor for the entire collection of plot objects (ModelGroup3D) based on the WorldHeight
+        /// </summary>
+        /// <param name="factors"></param>
+        /// <returns></returns>
+        public static double CalcYHeightScaleFactor(ScalingFactors factors)
+        {
+            return ((factors.SceneHeight / factors.WorldHeight) / (factors.SceneWidth / factors.WorldWidth));// * 1 / factors.SceneScalingRatio;
+            //Multiplying the return value by 1/sceneScaleRatio would treat the Y and X range the same (if the WorldWidth == WorldHeight (always))
+            //* 1 / scalingFactors.sceneScalingRatio
         }
 
         /// <summary>
@@ -52,18 +76,6 @@ namespace CoreLibrary.Utilities
             double y2 = edgePoints[1].Y;
 
             return Math.Sqrt(Math.Pow((x1 - x2), 2) + Math.Pow((y1 - y2), 2));
-        }
-
-        /// <summary>
-        /// Calculates the Y scaling factor for the entire collection of plot objects (ModelGroup3D) based on the WorldHeight
-        /// </summary>
-        /// <param name="factors"></param>
-        /// <returns></returns>
-        public static double CalcYHeightScaleFactor(ScalingFactors factors)
-        {
-            return ((factors.SceneHeight / factors.WorldHeight) / (factors.SceneWidth / factors.WorldWidth));
-            //Multiplying the return value by 1/sceneScaleRatio would treat the Y and X range the same (if the WorldWidth == WorldHeight (always))
-            //* 1 / scalingFactors.sceneScalingRatio
         }
 
         /// <summary>

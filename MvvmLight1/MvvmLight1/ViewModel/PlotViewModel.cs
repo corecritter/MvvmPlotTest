@@ -76,8 +76,7 @@ namespace MvvmLight1.ViewModel
                 if (scalingFactors.SceneScalingRatio != 0)
                 {
                     ModelTransformations transform = new ModelTransformations();
-                    //transform.scale(scalingFactors.sceneScalingRatio);// sceneHeight / worldHeight * scalingFactors.sceneScalingRatio);
-                    double scale = PlotUtilities.CalcYHeightScaleFactor(scalingFactors);//((SceneHeight / WorldHeight) / (SceneWidth / WorldWidth));// * 1 / scalingFactors.sceneScalingRatio;
+                    double scale = PlotUtilities.CalcYHeightScaleFactor(scalingFactors);
                     transform.scale(scale);
                     var transforms = transform.getTransformations();
 
@@ -222,7 +221,9 @@ namespace MvvmLight1.ViewModel
         private void ScaleChange()
         {
             scalingFactors.SceneAspectRatio = SceneWidth / SceneHeight;
+
             scalingFactors.SceneScalingRatio = 1 / (((2 / SceneHeight - 1) * (-1)) * scalingFactors.SceneAspectRatio);
+            //scalingFactors.SceneScalingRatio = 1 / (((2 / scalingFactors.SceneAspectRatio - 1) * (-1)) * scalingFactors.SceneAspectRatio);
 
             double scale = Math.Max(WorldWidth, WorldHeight);
             scalingFactors.SegmentScale = scale / ScalingConstants.Segment_Scale;
