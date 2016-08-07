@@ -44,7 +44,7 @@ namespace MvvmLight1.ViewModel
 
             SimpleIoc.Default.Register<MainViewModel>();
             SimpleIoc.Default.Register<PointInputViewModel>();
-            SimpleIoc.Default.Register<AllInputViewModel>();
+            SimpleIoc.Default.Register<AllPointInputViewModel>();
             SimpleIoc.Default.Register<PlotViewModel>();
         }
 
@@ -62,11 +62,11 @@ namespace MvvmLight1.ViewModel
             }
         }
 
-        public AllInputViewModel AllInput
+        public AllPointInputViewModel AllInput
         {
             get
             {
-                return ServiceLocator.Current.GetInstance<AllInputViewModel>();
+                return ServiceLocator.Current.GetInstance<AllPointInputViewModel>();
             }
         }
 

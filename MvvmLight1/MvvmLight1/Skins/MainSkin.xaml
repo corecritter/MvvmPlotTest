@@ -4,7 +4,7 @@
                     xmlns:vw ="clr-namespace:Controls.View;assembly=Controls"
                     xmlns:plotvw="clr-namespace:Plot.View;assembly=Plot">
 
-    <DataTemplate DataType="{x:Type vm:AllInputViewModel}">
+    <DataTemplate DataType="{x:Type vm:AllPointInputViewModel}">
         <vw:AllInputView/>
     </DataTemplate>
 

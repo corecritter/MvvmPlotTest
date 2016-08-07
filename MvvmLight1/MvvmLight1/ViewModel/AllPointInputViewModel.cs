@@ -15,9 +15,9 @@ using System.Windows.Input;
 
 namespace MvvmLight1.ViewModel
 {
-    public class AllInputViewModel : WorkspaceViewModel
+    public class AllPointInputViewModel : WorkspaceViewModel
     {
-        public AllInputViewModel(DataRepository dataRepository) : base(dataRepository)
+        public AllPointInputViewModel(DataRepository dataRepository) : base(dataRepository)
         {
             this.AllInputs.CollectionChanged += this.OnCollectionChanged;
             this._dataRepository.ShapeAdded += this.OnShapeAddedToRepository;

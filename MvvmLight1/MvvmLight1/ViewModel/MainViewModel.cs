@@ -134,7 +134,7 @@ namespace MvvmLight1.ViewModel
                 {
                     _workspaces = new ObservableCollection<WorkspaceViewModel>();
                     _workspaces.CollectionChanged += this.OnWorkSpacesChanged;
-                    AllInputViewModel workspace = new AllInputViewModel(_dataRepository);
+                    AllPointInputViewModel workspace = new AllPointInputViewModel(_dataRepository);
                     this.Workspaces.Add(workspace);
                     AllSlopeInterceptInputViewModel workspace2 = new AllSlopeInterceptInputViewModel(_dataRepository);
                     this.Workspaces.Add(workspace2);

@@ -80,7 +80,7 @@
     <Compile Include="Model\DataItem.cs" />
     <Compile Include="Model\DataService.cs" />
     <Compile Include="Model\IDataService.cs" />
-    <Compile Include="ViewModel\AllInputViewModel.cs" />
+    <Compile Include="ViewModel\AllPointInputViewModel.cs" />
     <Compile Include="ViewModel\AllSlopeInterceptInputViewModel.cs" />
     <Compile Include="ViewModel\LineInputViewModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
