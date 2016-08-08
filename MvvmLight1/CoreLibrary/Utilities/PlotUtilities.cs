@@ -25,17 +25,17 @@ namespace CoreLibrary.Utilities
             //Min scale
             double wMin = wMax * factors.SceneScalingRatio;
 
-            if (wMin > wMin * yScale)
-            {
-                wMin = wMax * factors.SceneScalingRatio * yScale;
-            }
-            else
-            {
-                wMax = wMax / yScale;
-            }
+            //if (wMin > wMin * yScale)
+            //{
+            //    wMin = wMax * factors.SceneScalingRatio * yScale;
+            //}
+            //else
+            //{
+            //    wMax = wMax / yScale;
+            //}
 
-            return Math.Min(Math.Max(wMin, wMax), (((wMax - wMin) * Math.Max(0, Math.Cos(rotationAngle)) + wMin) + .01));
-            //return (((wMax - wMin) * Math.Cos(rotationAngle) + wMin) + .01);
+            //return Math.Min(Math.Max(wMin, wMax), (((wMax - wMin) * Math.Max(0, Math.Cos(rotationAngle)) + wMin) + .01));
+            return (((wMax - wMin) * Math.Cos(rotationAngle) + wMin) + .01);
         }
 
         /// <summary>

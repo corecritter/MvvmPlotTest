@@ -24,6 +24,9 @@ namespace CoreLibrary.ViewModel
         {
             this.AllInputs = new ObservableCollection<InputViewModel>();
             _dataRepository = dataRepository;
+            this.AllInputs.CollectionChanged += this.OnCollectionChanged;
+            this._dataRepository.ShapeAdded += this.OnShapeAddedToRepository;
+            this._dataRepository.ShapeDeleted += this.OnShapeDeletedFromRepository;
         }
 
         public void OnCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)

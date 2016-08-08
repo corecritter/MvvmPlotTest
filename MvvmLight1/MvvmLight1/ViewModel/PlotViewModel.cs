@@ -80,7 +80,7 @@ namespace MvvmLight1.ViewModel
                     transform.scale(scale);
                     var transforms = transform.getTransformations();
 
-                    modelGroup.Transform = transforms;
+                    //modelGroup.Transform = transforms;
                 }
                 return modelGroup;
             }

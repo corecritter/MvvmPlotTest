@@ -34,7 +34,7 @@ namespace CoreLibrary.Model
             double length = PlotUtilities.CalculateLength(edgePoints);
             double rotationAngle = PlotUtilities.CalcRotationAngle(slope);
             double yScaleFactor = PlotUtilities.CalcYObjectScaleFactor(scalingFactors, rotationAngle);
-
+            
             transformations.scale((length / 2), yScaleFactor);
             transformations.rotate(rotationAngle);
             transformations.translate(midpoint.X, midpoint.Y);
